@@ -1,5 +1,7 @@
 package com.change.client.service;
 
+import org.json.JSONObject;
+
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
@@ -40,7 +42,7 @@ public class ClientConnection {
         }
     }
 
-    public JsonObject send(String message){
+    public JSONObject send(String message){
         String response = null;
         try{
             this.out.writeUTF(message);
@@ -63,8 +65,8 @@ public class ClientConnection {
         instance = null;
     }
 
-    private JsonObject parser(String data){
-        JsonReader reader = Json.createReader(new StringReader(data));
-        return reader.readObject();
+    private JSONObject parser(String data){
+        JSONObject json = new JSONObject(data);
+        return json;
     }
 }

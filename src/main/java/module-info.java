@@ -3,6 +3,7 @@ module com.change.client {
     requires javafx.fxml;
     requires java.json;
     requires com.google.gson;
+    requires org.json;
 
 
     opens com.change.client to javafx.fxml;

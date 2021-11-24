@@ -1,9 +1,11 @@
 package com.change.server.operations;
 
 import com.change.model.User;
+import org.json.JSONObject;
 
-import javax.json.Json;
 import javax.json.JsonObject;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Login extends IOperation{
 
@@ -17,11 +19,16 @@ public class Login extends IOperation{
 
     @Override
     public String handle(JsonObject message){
+        List<String> messages = new ArrayList<>();
         if(1 == Integer.valueOf(message.get("operacao").toString())){
             User user = parseJsonUser(message);
-            if(Login(user.getEmail(), user.getPassword()))
-                return makeResponse(false, "sucesso");
-            return makeResponse(true, "Email ou Senha inválido.");
+            if(Login(user.getEmail(), user.getPassword())) {
+                messages.add("retorno.sucesso");
+                return makeResponse(false, messages);
+            }
+            messages.add("erro.credenciais_invalidas");
+            messages.add("erro.generico");
+            return makeResponse(true, messages);
         }else{
             return super.handle(message);
         }
@@ -43,12 +50,11 @@ public class Login extends IOperation{
         return user;
     }
 
-    private String makeResponse(boolean error, String messages){
-        JsonObject json = Json.createObjectBuilder()
-                .add("operacao", 1)
-                .add("erro", error)
-                .add("mensagem", messages)
-                .build();
-        return json.toString();
+    private String makeResponse(boolean error, List<String> messages){
+        JSONObject obj = new JSONObject();
+        obj.put("operacao", 1);
+        obj.put("erro", error);
+        obj.put("mensagem", messages);
+        return obj.toString();
     }
 }

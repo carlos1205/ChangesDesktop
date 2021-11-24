@@ -1,7 +1,11 @@
 package com.change.server.operations;
 
+import org.json.JSONObject;
+
 import javax.json.Json;
 import javax.json.JsonObject;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Logout extends IOperation{
     public Logout(IOperation next){
@@ -14,10 +18,14 @@ public class Logout extends IOperation{
 
     @Override
     public String handle(JsonObject message){
+        List<String> messages = new ArrayList<>();
         if(8 == Integer.valueOf(message.get("operacao").toString())){
-            if(logout())
-                return makeResponse(false, "sucesso");
-            return makeResponse(true, "Email ou Senha inválido.");
+            if(logout()){
+                messages.add("retorno.sucesso");
+                return makeResponse(false, messages);
+            }
+            messages.add("erro.generico");
+            return makeResponse(true, messages);
         }else{
             return super.handle(message);
         }
@@ -27,12 +35,11 @@ public class Logout extends IOperation{
         return true;
     }
 
-    private String makeResponse(boolean error, String messages){
-        JsonObject json = Json.createObjectBuilder()
-                .add("operacao", 8)
-                .add("erro", error)
-                .add("mensagem", messages)
-                .build();
-        return json.toString();
+    private String makeResponse(boolean error, List<String> messages){
+        JSONObject obj = new JSONObject();
+        obj.put("operacao", 1);
+        obj.put("erro", error);
+        obj.put("mensagem", messages);
+        return obj.toString();
     }
 }

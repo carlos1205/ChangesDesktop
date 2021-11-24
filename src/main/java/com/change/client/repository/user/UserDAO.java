@@ -3,6 +3,7 @@ package com.change.client.repository.user;
 import com.change.model.User;
 import com.change.client.service.ClientConnection;
 import com.change.client.service.Storage;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,13 +27,13 @@ public class UserDAO implements IUserDAO{
     public boolean login(String email, String password){
         ClientConnection connection = ClientConnection.getInstance();
 
-        JsonObject response = connection.send(parseLoginToJson(email, password));
+        JSONObject response = connection.send(parseLoginToJson(email, password));
         boolean res = Boolean.parseBoolean(response.get("erro").toString());
 
         if(!res){
             Storage.getInstance().setUserId("asht7123x");
         }else{
-            this.errors.add(response.get("mensagem").toString().replace("\"", ""));
+            this.errors.add(response.get("mensagem").toString());
             connection.close();
         }
         return !res;
