@@ -26,7 +26,7 @@ public class LoginController {
 
     public void handleLogin(ActionEvent actionEvent) throws NoSuchAlgorithmException, UnsupportedEncodingException {
         IUserDAO userDao = UserDAO.getInstance();
-        if(true == userDao.login(email.getText(), hashGenerate(password.getText()))) {
+        if(true == userDao.login(email.getText(), hashGenerate(password.getText()).toLowerCase())) {
             this.clear();
             StageFactory.getInstance().changeScene(EnumScenes.HOME);
         }else {

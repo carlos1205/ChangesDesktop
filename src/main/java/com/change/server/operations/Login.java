@@ -3,7 +3,6 @@ package com.change.server.operations;
 import com.change.model.User;
 import org.json.JSONObject;
 
-import javax.json.JsonObject;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,15 +17,15 @@ public class Login extends IOperation{
     }
 
     @Override
-    public String handle(JsonObject message){
+    public String handle(JSONObject message){
         List<String> messages = new ArrayList<>();
-        if(1 == Integer.valueOf(message.get("operacao").toString())){
+        if(1 == message.getInt("operacao")){
             User user = parseJsonUser(message);
             if(Login(user.getEmail(), user.getPassword())) {
-                messages.add("retorno.sucesso");
+                messages.add("Sucesso");
                 return makeResponse(false, messages);
             }
-            messages.add("erro.credenciais_invalidas");
+            messages.add("Email ou Senha invalido");
             messages.add("erro.generico");
             return makeResponse(true, messages);
         }else{
@@ -38,15 +37,15 @@ public class Login extends IOperation{
         String passMock = "90C262E87EA47FB07A75957D42121ABC362B2624C0AA0AD924BC1E4929154D2A";
         String emailMock = "carlos@gmail.com";
 
-        if(email.equals(emailMock) && passMock.equals(password))
+        if(email.equals(emailMock) && passMock.equalsIgnoreCase(password))
             return true;
         return false;
     }
 
-    private User parseJsonUser(JsonObject message){
+    private User parseJsonUser(JSONObject message){
         User user = new User();
-        user.setEmail(message.get("data").asJsonObject().get("email").toString().replace("\"", ""));
-        user.setPassword(message.get("data").asJsonObject().get("password").toString().replace("\"", ""));
+        user.setEmail(message.getJSONObject("data").getString("email"));
+        user.setPassword(message.getJSONObject("data").getString("senha"));
         return user;
     }
 

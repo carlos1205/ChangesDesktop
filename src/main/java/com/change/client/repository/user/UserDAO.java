@@ -3,12 +3,12 @@ package com.change.client.repository.user;
 import com.change.model.User;
 import com.change.client.service.ClientConnection;
 import com.change.client.service.Storage;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.json.*;
 
 public class UserDAO implements IUserDAO{
     private static UserDAO instance;
@@ -26,14 +26,13 @@ public class UserDAO implements IUserDAO{
 
     public boolean login(String email, String password){
         ClientConnection connection = ClientConnection.getInstance();
-
         JSONObject response = connection.send(parseLoginToJson(email, password));
         boolean res = Boolean.parseBoolean(response.get("erro").toString());
 
         if(!res){
             Storage.getInstance().setUserId("asht7123x");
         }else{
-            this.errors.add(response.get("mensagem").toString());
+            this.errors.add(response.getJSONArray("mensagem").getString(0));
             connection.close();
         }
         return !res;
@@ -41,12 +40,9 @@ public class UserDAO implements IUserDAO{
 
     public void logout(){
         ClientConnection connection = ClientConnection.getInstance();
+        JSONObject send = new JSONObject().put("operacao", 8);
 
-        String send = Json.createObjectBuilder()
-                .add("operacao",8)
-                .build().toString();
-
-        connection.send(send);
+        connection.send(send.toString());
         connection.close();
     }
 
@@ -68,12 +64,11 @@ public class UserDAO implements IUserDAO{
     }
 
     private String parseLoginToJson(String email, String password){
-        return  Json.createObjectBuilder()
-                    .add("operacao",1)
-                    .add("data", Json.createObjectBuilder()
-                            .add("email", email)
-                            .add("password", password)
-                            .build())
-                    .build().toString();
+        return new JSONObject()
+                .put("operacao", 1)
+                .put("data", new JSONObject()
+                        .put("email", email)
+                        .put("senha", password)
+                ).toString();
     }
 }

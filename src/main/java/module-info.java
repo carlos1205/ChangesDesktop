@@ -1,8 +1,6 @@
 module com.change.client {
     requires javafx.controls;
     requires javafx.fxml;
-    requires java.json;
-    requires com.google.gson;
     requires org.json;
 
 

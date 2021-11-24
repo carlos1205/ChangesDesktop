@@ -1,7 +1,6 @@
 package com.change.server.operations;
 
-import javax.json.Json;
-import javax.json.JsonObject;
+import org.json.JSONObject;
 
 public abstract class IOperation {
     private IOperation next;
@@ -18,18 +17,17 @@ public abstract class IOperation {
         this.next = next;
     }
 
-    public String handle(JsonObject message){
+    public String handle(JSONObject message){
         if(null != next)
             return next.handle(message);
-        return makeResponse(true, "Operacao invalida", Integer.valueOf(message.get("operacao").toString()));
+        return makeResponse(true, "Operacao invalida", message.getInt("operacao"));
     }
 
     private String makeResponse(boolean error, String messages, int operation){
-        JsonObject json = Json.createObjectBuilder()
-                .add("operacao", operation)
-                .add("erro", error)
-                .add("mensagem", messages)
-                .build();
-        return json.toString();
+        return new JSONObject()
+                .put("operacao", operation)
+                .put("erro", error)
+                .put("mensagem", messages)
+                .toString();
     }
 }

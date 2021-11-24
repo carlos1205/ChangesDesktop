@@ -8,7 +8,7 @@ public class TCPServer {
     public static void main(String[] args){
 
         try{
-            int serverPort = 8765;
+            int serverPort = 25000;
             ServerSocket listenSocket = new ServerSocket(serverPort);
             System.out.println("Servidor rodando na porta " + serverPort);
             while(true){

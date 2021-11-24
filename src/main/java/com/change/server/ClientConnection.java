@@ -1,45 +1,36 @@
 package com.change.server;
 
 import com.change.server.service.OperationsFactory;
-import com.google.gson.Gson;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.json.JsonReader;
 import java.io.*;
 import java.net.Socket;
 
 public class ClientConnection extends Thread{
-    private DataInputStream in;
-    private DataOutputStream out;
     private Socket clientSocket;
 
     public ClientConnection(Socket clientSocket){
-        try{
-            this.clientSocket = clientSocket;
-            this.in = new DataInputStream(this.clientSocket.getInputStream());
-            this.out = new DataOutputStream(this.clientSocket.getOutputStream());
-            this.start();
-        }catch (IOException e){
-            System.out.println("Connection: "+e.getMessage());
-        }
+        this.clientSocket = clientSocket;
+        this.start();
     }
 
     public void run(){
         try{
             while (true) {
-                String data = this.in.readUTF();
-                if(null == data)
-                    continue;
+                JSONObject data = receive();
+                System.out.println("Received:> " + data);
 
-                System.out.println("Mensagem Recebida: " + data);
-                String response = OperationsFactory.getInstance().getOperations().handle(parser(data));
+                String response = OperationsFactory.getInstance().getOperations().handle(data);
 
-                System.out.println("Mensagem Enviada: " + response);
-                this.out.writeUTF(response);
+                PrintStream out = new PrintStream(this.clientSocket.getOutputStream());
+                out.println(response);
+                System.out.println("Send:> " + response);
             }
+        }catch (JSONException e){
+            System.out.println("Cliente desconectado");
         }catch (EOFException e){
-            System.out.println("A aplicação cliente se desconectou");
+            System.out.println("EOF: "+e.getMessage());
         }catch (IOException e){
             System.out.println("IO: "+e.getMessage());
         }finally {
@@ -51,8 +42,12 @@ public class ClientConnection extends Thread{
         }
     }
 
-    private JsonObject parser(String data){
-        JsonReader reader = Json.createReader(new StringReader(data));
-        return reader.readObject();
+    private JSONObject receive() throws IOException, JSONException {
+        String ln = null;
+        BufferedReader read = new BufferedReader(new InputStreamReader(this.clientSocket.getInputStream()));
+        char[] cbuf = new char[2048];
+        read.read(cbuf);
+        ln = String.valueOf(cbuf.clone());
+        return new JSONObject(ln);
     }
 }

@@ -2,9 +2,6 @@ package com.change.client.service;
 
 import org.json.JSONObject;
 
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.json.JsonReader;
 import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -13,12 +10,10 @@ public class ClientConnection {
     private static ClientConnection instance;
 
     private Socket socket;
-    private DataInputStream in;
-    private DataOutputStream out;
 
     public static ClientConnection getInstance(){
         if(null == instance)
-            instance = new ClientConnection("localhost", 8765);
+            instance = new ClientConnection("localhost", 25000);
 
         return instance;
     }
@@ -31,8 +26,6 @@ public class ClientConnection {
     public void create(String host, int port){
         try{
             this.socket = new Socket(host, port);
-            this.in = new DataInputStream(socket.getInputStream());
-            this.out = new DataOutputStream(socket.getOutputStream());
         }catch(UnknownHostException e){
             System.out.println("Sock: "+e.getMessage());
         }catch(EOFException e){
@@ -43,17 +36,18 @@ public class ClientConnection {
     }
 
     public JSONObject send(String message){
-        String response = null;
+        JSONObject response = null;
         try{
-            this.out.writeUTF(message);
+            PrintStream out = new PrintStream(this.socket.getOutputStream());
+            out.println(message);
             System.out.println("Mensagem Enviada: " + message);
 
-            response = this.in.readUTF();
+            response = receive();
             System.out.println("Mensagem Recebida: " + response);
         }catch (IOException e){
             System.out.println("IO: "+e.getMessage());
         }
-        return parser(response);
+        return response;
     }
 
     public void close(){
@@ -65,8 +59,13 @@ public class ClientConnection {
         instance = null;
     }
 
-    private JSONObject parser(String data){
-        JSONObject json = new JSONObject(data);
-        return json;
+    private JSONObject receive() throws IOException{
+        String ln = null;
+
+        BufferedReader read = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
+        char[] cbuf = new char[2048];
+        read.read(cbuf);
+        ln = String.valueOf(cbuf.clone());
+        return new JSONObject(ln);
     }
 }

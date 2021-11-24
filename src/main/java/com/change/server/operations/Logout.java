@@ -2,8 +2,6 @@ package com.change.server.operations;
 
 import org.json.JSONObject;
 
-import javax.json.Json;
-import javax.json.JsonObject;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,11 +15,11 @@ public class Logout extends IOperation{
     }
 
     @Override
-    public String handle(JsonObject message){
+    public String handle(JSONObject message){
         List<String> messages = new ArrayList<>();
-        if(8 == Integer.valueOf(message.get("operacao").toString())){
+        if(8 == message.getInt("operacao")){
             if(logout()){
-                messages.add("retorno.sucesso");
+                messages.add("Sucesso");
                 return makeResponse(false, messages);
             }
             messages.add("erro.generico");
