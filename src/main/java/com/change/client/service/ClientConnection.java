@@ -13,7 +13,7 @@ public class ClientConnection {
 
     public static ClientConnection getInstance(){
         if(null == instance)
-            instance = new ClientConnection("localhost", 25000);
+            instance = new ClientConnection("10.20.50.23", 25000);
 
         return instance;
     }

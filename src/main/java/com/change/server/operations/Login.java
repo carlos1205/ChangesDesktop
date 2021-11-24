@@ -25,7 +25,7 @@ public class Login extends IOperation{
                 messages.add("Sucesso");
                 return makeResponse(false, messages);
             }
-            messages.add("Email ou Senha invalido");
+            messages.add("Email ou Senha inválido.");
             messages.add("erro.generico");
             return makeResponse(true, messages);
         }else{

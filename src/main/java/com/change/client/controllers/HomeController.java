@@ -25,6 +25,6 @@ public class HomeController {
     public void initialize(){
         IUserDAO userDao = UserDAO.getInstance();
         User user = userDao.getUser(Storage.getInstance().getUserId());
-        welcome.setText("Seja bem-vindo ao Change,\n" + user.getName());
+        welcome.setText("Seja bem-vindo ao Change.\n");
     }
 }
