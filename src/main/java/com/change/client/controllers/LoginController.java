@@ -12,12 +12,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 
 import java.io.UnsupportedEncodingException;
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class LoginController {
+    private static IUserDAO userDao = UserDAO.getInstance();
+    private static StageFactory stageFactory = StageFactory.getInstance();
+
     @FXML
     private TextField email;
     @FXML
@@ -26,10 +27,9 @@ public class LoginController {
     private Text errors;
 
     public void handleLogin(ActionEvent actionEvent) throws NoSuchAlgorithmException, UnsupportedEncodingException {
-        IUserDAO userDao = UserDAO.getInstance();
         if(true == userDao.login(email.getText(), new HashGenerator().hashGenerate(password.getText()).toLowerCase())) {
             this.clear();
-            StageFactory.getInstance().changeScene(EnumScenes.HOME);
+            stageFactory.changeScene(EnumScenes.HOME);
         }else {
             setErrors(userDao.getErrors());
         }
@@ -37,7 +37,15 @@ public class LoginController {
 
     public void handleCadastrar(ActionEvent actionEvent) {
         this.clear();
-        StageFactory.getInstance().changeScene(EnumScenes.CADASTRO);
+        stageFactory.changeScene(EnumScenes.CADASTRO);
+    }
+
+    public static void setUserDao(IUserDAO userDao) {
+        LoginController.userDao = userDao;
+    }
+
+    public static void setStageFactory(StageFactory stageFactory) {
+        LoginController.stageFactory = stageFactory;
     }
 
     private void setErrors(List<String> errors){

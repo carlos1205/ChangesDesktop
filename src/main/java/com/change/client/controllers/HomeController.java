@@ -11,20 +11,28 @@ import javafx.fxml.FXML;
 import javafx.scene.text.Text;
 
 public class HomeController {
+    private static IUserDAO userDao = UserDAO.getInstance();
+    private static StageFactory stageFactory = StageFactory.getInstance();
+
     @FXML
     private Text welcome;
 
     public void handleLogout(ActionEvent event) {
-        IUserDAO userDao = UserDAO.getInstance();
         userDao.logout();
         Storage.getInstance().setUserId("");
-        StageFactory.getInstance().changeScene(EnumScenes.LOGIN);
+        stageFactory.changeScene(EnumScenes.LOGIN);
     }
 
     @FXML
     public void initialize(){
-        IUserDAO userDao = UserDAO.getInstance();
-        User user = userDao.getUser(Storage.getInstance().getUserId());
         welcome.setText("Seja bem-vindo ao Change.\n");
+    }
+
+    public static void setUserDao(IUserDAO userDao) {
+        HomeController.userDao = userDao;
+    }
+
+    public static void setStageFactory(StageFactory stageFactory) {
+        HomeController.stageFactory = stageFactory;
     }
 }

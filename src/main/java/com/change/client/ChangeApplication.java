@@ -1,5 +1,6 @@
 package com.change.client;
 
+import com.change.client.config.Config;
 import com.change.client.service.ClientConnection;
 import com.change.client.service.StageFactory;
 import javafx.application.Application;
@@ -12,12 +13,13 @@ public class ChangeApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException{
         StageFactory factory = StageFactory.getInstance(stage);
+        Config.getInstance().make();
+        config();
         stage.setTitle("Change");
         factory.changeScene(EnumScenes.LOGIN);
     }
 
     public static void main(String[] args) {
-        config();
         launch();
     }
 

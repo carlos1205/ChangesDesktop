@@ -1,6 +1,7 @@
 package com.change.client.controllers;
 
 import com.change.client.EnumScenes;
+import com.change.client.config.annotations.Inject;
 import com.change.client.repository.user.IUserDAO;
 import com.change.client.repository.user.UserDAO;
 import com.change.client.service.StageFactory;
@@ -13,6 +14,11 @@ import javafx.scene.text.Text;
 import java.util.List;
 
 public class CadastroController {
+    @Inject
+    private static IUserDAO userDao;
+    @Inject
+    private static StageFactory stageFactory;
+
     @FXML
     private TextField name;
     @FXML
@@ -23,18 +29,25 @@ public class CadastroController {
     private Text errors;
 
     public void handleCadastrar(ActionEvent event){
-        IUserDAO userDao = UserDAO.getInstance();
         if(true == userDao.cadastrar(name.getText(), email.getText(), password.getText())){
             this.clear();
-            StageFactory.getInstance().changeScene(EnumScenes.LOGIN);
+            stageFactory.changeScene(EnumScenes.LOGIN);
         }else{
-            setErrors(userDao.getErrors());
+            setErrors(this.userDao.getErrors());
         }
     }
 
     public void handleGoBack(ActionEvent event){
         this.clear();
-        StageFactory.getInstance().changeScene(EnumScenes.LOGIN);
+        stageFactory.changeScene(EnumScenes.LOGIN);
+    }
+
+    public static void setUserDao(IUserDAO userDao) {
+        CadastroController.userDao = userDao;
+    }
+
+    public static void setStageFactory(StageFactory stageFactory) {
+        CadastroController.stageFactory = stageFactory;
     }
 
     private void setErrors(List<String> errors){
