@@ -9,11 +9,14 @@ import java.net.UnknownHostException;
 public class ClientConnection {
     private static ClientConnection instance;
 
+    private static String host;
+    private static int port;
+
     private Socket socket;
 
     public static ClientConnection getInstance(){
         if(null == instance)
-            instance = new ClientConnection("localhost", 25000);
+            instance = new ClientConnection(host, port);
 
         return instance;
     }
@@ -67,5 +70,13 @@ public class ClientConnection {
         read.read(cbuf);
         ln = String.valueOf(cbuf.clone());
         return new JSONObject(ln);
+    }
+
+    public static void setHost(String host) {
+        ClientConnection.host = host;
+    }
+
+    public static void setPort(int port) {
+        ClientConnection.port = port;
     }
 }

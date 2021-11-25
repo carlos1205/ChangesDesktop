@@ -52,6 +52,7 @@ public class ClientConnection extends Thread{
         try {
             if(clientSocket.isConnected())
                 clientSocket.close();
+            System.out.println("Client Desconectado");
             this.interrupt();
         } catch (IOException e) {
             e.printStackTrace();

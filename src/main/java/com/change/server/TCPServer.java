@@ -3,12 +3,14 @@ package com.change.server;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Scanner;
 
 public class TCPServer {
     public static void main(String[] args){
 
         try{
-            int serverPort = 25000;
+            System.out.print("Digite a porta em que o servidor ira se conectar: ");
+            int serverPort = Integer.valueOf(new Scanner(System.in).nextLine());
             ServerSocket listenSocket = new ServerSocket(serverPort);
             System.out.println("Servidor rodando na porta " + serverPort);
             while(true){
