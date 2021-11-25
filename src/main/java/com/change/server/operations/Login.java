@@ -1,8 +1,12 @@
 package com.change.server.operations;
 
+import com.change.Security.HashGenerator;
 import com.change.model.User;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +30,7 @@ public class Login extends IOperation{
                 return makeResponse(false, messages);
             }
             messages.add("Email ou Senha inválido.");
-            messages.add("erro.generico");
+            messages.add("no error");
             return makeResponse(true, messages);
         }else{
             return super.handle(message);
@@ -34,11 +38,14 @@ public class Login extends IOperation{
     }
 
     public boolean Login(String email, String password){
-        String passMock = "90C262E87EA47FB07A75957D42121ABC362B2624C0AA0AD924BC1E4929154D2A";
-        String emailMock = "carlos@gmail.com";
-
-        if(email.equals(emailMock) && passMock.equalsIgnoreCase(password))
-            return true;
+        try{
+            String passMock = new HashGenerator().hashGenerate("root");
+            String emailMock = "root";
+            if(email.equals(emailMock) && passMock.equalsIgnoreCase(password))
+                return true;
+        }catch(NoSuchAlgorithmException | UnsupportedEncodingException e){
+            System.out.println("Auth: "+e.getMessage());
+        }
         return false;
     }
 

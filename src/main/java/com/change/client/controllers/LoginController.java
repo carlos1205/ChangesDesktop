@@ -1,5 +1,6 @@
 package com.change.client.controllers;
 
+import com.change.Security.HashGenerator;
 import com.change.client.EnumScenes;
 import com.change.client.repository.user.IUserDAO;
 import com.change.client.repository.user.UserDAO;
@@ -26,7 +27,7 @@ public class LoginController {
 
     public void handleLogin(ActionEvent actionEvent) throws NoSuchAlgorithmException, UnsupportedEncodingException {
         IUserDAO userDao = UserDAO.getInstance();
-        if(true == userDao.login(email.getText(), hashGenerate(password.getText()).toLowerCase())) {
+        if(true == userDao.login(email.getText(), new HashGenerator().hashGenerate(password.getText()).toLowerCase())) {
             this.clear();
             StageFactory.getInstance().changeScene(EnumScenes.HOME);
         }else {
@@ -51,17 +52,5 @@ public class LoginController {
         email.setText("");
         password.setText("");
         errors.setText("");
-    }
-
-    private String hashGenerate(String message)  throws NoSuchAlgorithmException, UnsupportedEncodingException {
-        MessageDigest algorithm = MessageDigest.getInstance("SHA-256");
-        byte messageDigest[] = algorithm.digest(password.getText().getBytes("UTF-8"));
-
-        StringBuilder hexString = new StringBuilder();
-        for (byte b : messageDigest) {
-            hexString.append(String.format("%02X", 0xFF & b));
-        }
-
-        return hexString.toString();
     }
 }
