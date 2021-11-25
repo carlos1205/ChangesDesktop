@@ -3,7 +3,6 @@ package com.change.client.controllers;
 import com.change.client.EnumScenes;
 import com.change.client.config.annotations.Inject;
 import com.change.client.repository.user.IUserDAO;
-import com.change.client.repository.user.UserDAO;
 import com.change.client.service.StageFactory;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

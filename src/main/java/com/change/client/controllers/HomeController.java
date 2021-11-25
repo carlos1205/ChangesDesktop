@@ -1,9 +1,8 @@
 package com.change.client.controllers;
 
 import com.change.client.EnumScenes;
-import com.change.model.User;
+import com.change.client.config.annotations.Inject;
 import com.change.client.repository.user.IUserDAO;
-import com.change.client.repository.user.UserDAO;
 import com.change.client.service.StageFactory;
 import com.change.client.service.Storage;
 import javafx.event.ActionEvent;
@@ -11,8 +10,10 @@ import javafx.fxml.FXML;
 import javafx.scene.text.Text;
 
 public class HomeController {
-    private static IUserDAO userDao = UserDAO.getInstance();
-    private static StageFactory stageFactory = StageFactory.getInstance();
+    @Inject
+    private static IUserDAO userDao;
+    @Inject
+    private static StageFactory stageFactory;
 
     @FXML
     private Text welcome;
