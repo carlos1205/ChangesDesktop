@@ -1,6 +1,9 @@
 package com.change.server.operations;
 
+import com.change.server.ClientConnection;
 import org.json.JSONObject;
+
+import java.io.IOException;
 
 public abstract class IOperation {
     private IOperation next;
@@ -17,10 +20,10 @@ public abstract class IOperation {
         this.next = next;
     }
 
-    public String handle(JSONObject message){
+    public void handle(ClientConnection client, JSONObject message) throws IOException {
         if(null != next)
-            return next.handle(message);
-        return makeResponse(true, "Operacao invalida", message.getInt("operacao"));
+            next.handle(client, message);
+        makeResponse(true, "Operacao invalida", message.getInt("operacao"));
     }
 
     private String makeResponse(boolean error, String messages, int operation){

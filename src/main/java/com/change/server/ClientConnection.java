@@ -12,20 +12,17 @@ public class ClientConnection extends Thread{
 
     public ClientConnection(Socket clientSocket){
         this.clientSocket = clientSocket;
+        System.out.println("Client Connectado: "+getIP());
         this.start();
     }
 
     public void run(){
         try{
-            while (true) {
+            while (!clientSocket.isClosed()) {
                 JSONObject data = receive();
                 System.out.println("Received:> " + data);
 
-                String response = OperationsFactory.getInstance().getOperations().handle(data);
-
-                PrintStream out = new PrintStream(this.clientSocket.getOutputStream());
-                out.println(response);
-                System.out.println("Send:> " + response);
+                OperationsFactory.getInstance().getOperations().handle(this, data);
             }
         }catch (JSONException e){
             System.out.println("Cliente desconectado");
@@ -33,21 +30,35 @@ public class ClientConnection extends Thread{
             System.out.println("EOF: "+e.getMessage());
         }catch (IOException e){
             System.out.println("IO: "+e.getMessage());
-        }finally {
-            try {
-                this.clientSocket.close();
-            }catch (IOException e){
-                System.out.println("IO: "+e.getMessage());
-            }
         }
     }
 
-    private JSONObject receive() throws IOException, JSONException {
+    public JSONObject receive() throws IOException, JSONException {
         String ln = null;
         BufferedReader read = new BufferedReader(new InputStreamReader(this.clientSocket.getInputStream()));
         char[] cbuf = new char[2048];
         read.read(cbuf);
         ln = String.valueOf(cbuf.clone());
         return new JSONObject(ln);
+    }
+
+    public void send(String response) throws IOException, JSONException {
+        PrintStream out = new PrintStream(this.clientSocket.getOutputStream());
+        out.println(response);
+        System.out.println("Send:> " + response);
+    }
+
+    public void close(){
+        try {
+            if(clientSocket.isConnected())
+                clientSocket.close();
+            this.interrupt();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String getIP(){
+        return clientSocket.getInetAddress().getHostAddress();
     }
 }
