@@ -7,7 +7,7 @@ import com.change.server.operations.Logout;
 public class OperationsFactory {
     private static OperationsFactory instance;
 
-    private IOperation operations;
+    private final IOperation operations;
 
     public static OperationsFactory getInstance(){
         if(null == instance)

@@ -1,4 +1,4 @@
-package com.change.client.service;
+package com.change.client.service.connection;
 
 import org.json.JSONObject;
 
@@ -6,7 +6,7 @@ import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-public class ClientConnection {
+public class ClientConnection implements IConnection{
     private static ClientConnection instance;
 
     private static String host;
@@ -63,7 +63,7 @@ public class ClientConnection {
     }
 
     private JSONObject receive() throws IOException{
-        String ln = null;
+        String ln;
 
         BufferedReader read = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
         char[] cbuf = new char[2048];

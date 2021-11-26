@@ -8,7 +8,7 @@ import java.io.*;
 import java.net.Socket;
 
 public class ClientConnection extends Thread{
-    private Socket clientSocket;
+    private final Socket clientSocket;
 
     public ClientConnection(Socket clientSocket){
         this.clientSocket = clientSocket;
@@ -34,7 +34,7 @@ public class ClientConnection extends Thread{
     }
 
     public JSONObject receive() throws IOException, JSONException {
-        String ln = null;
+        String ln;
         BufferedReader read = new BufferedReader(new InputStreamReader(this.clientSocket.getInputStream()));
         char[] cbuf = new char[2048];
         read.read(cbuf);

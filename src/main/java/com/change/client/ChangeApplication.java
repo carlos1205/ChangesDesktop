@@ -1,7 +1,7 @@
 package com.change.client;
 
 import com.change.client.config.Config;
-import com.change.client.service.ClientConnection;
+import com.change.client.service.connection.ClientConnection;
 import com.change.client.service.StageFactory;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -13,8 +13,8 @@ public class ChangeApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException{
         StageFactory factory = StageFactory.getInstance(stage);
-        Config.getInstance().make();
         config();
+        Config.getInstance().make();
         stage.setTitle("Change");
         factory.changeScene(EnumScenes.LOGIN);
     }
@@ -31,7 +31,7 @@ public class ChangeApplication extends Application {
         ClientConnection.setHost(host);
 
         System.out.print("Digite a porta: ");
-        int port = Integer.valueOf(in.nextLine());
+        int port = Integer.parseInt(in.nextLine());
         ClientConnection.setPort(port);
     }
 }

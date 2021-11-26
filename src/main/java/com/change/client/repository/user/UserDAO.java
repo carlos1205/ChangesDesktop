@@ -1,9 +1,9 @@
 package com.change.client.repository.user;
 
+import com.change.client.config.annotations.Inject;
 import com.change.model.User;
-import com.change.client.service.ClientConnection;
+import com.change.client.service.connection.ClientConnection;
 import com.change.client.service.Storage;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;

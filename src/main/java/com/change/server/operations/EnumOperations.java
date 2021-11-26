@@ -4,7 +4,7 @@ public enum EnumOperations {
     LOGIN(1),
     LOGOUT(8);
 
-    private int number;
+    private final int number;
     EnumOperations(int number){
         this.number = number;
     }

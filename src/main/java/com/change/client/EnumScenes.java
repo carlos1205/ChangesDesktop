@@ -5,7 +5,7 @@ public enum EnumScenes {
     CADASTRO("cadastro-view.fxml"),
     HOME("home-view.fxml");
 
-    private String fileName;
+    private final String fileName;
 
     EnumScenes(String fileName){
         this.fileName = fileName;

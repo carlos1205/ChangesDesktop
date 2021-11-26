@@ -28,11 +28,11 @@ public class CadastroController {
     private Text errors;
 
     public void handleCadastrar(ActionEvent event){
-        if(true == userDao.cadastrar(name.getText(), email.getText(), password.getText())){
+        if(userDao.cadastrar(name.getText(), email.getText(), password.getText())){
             this.clear();
             stageFactory.changeScene(EnumScenes.LOGIN);
         }else{
-            setErrors(this.userDao.getErrors());
+            setErrors(userDao.getErrors());
         }
     }
 
@@ -62,5 +62,21 @@ public class CadastroController {
         this.email.setText("");
         this.password.setText("");
         this.errors.setText("");
+    }
+
+    public TextField getName() {
+        return name;
+    }
+
+    public TextField getEmail() {
+        return email;
+    }
+
+    public PasswordField getPassword() {
+        return password;
+    }
+
+    public Text getErrors() {
+        return errors;
     }
 }

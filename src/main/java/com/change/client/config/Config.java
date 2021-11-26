@@ -17,8 +17,8 @@ import java.util.List;
 import java.util.Map;
 
 public class Config {
-    private Map<Class, Class> classes;
-    private List<Class> controllers;
+    private final Map<Class, Class> injects;
+    private final List<Class> classes;
     private static Config instance;
 
     public static Config getInstance(){
@@ -28,42 +28,48 @@ public class Config {
     }
 
     private Config(){
+        injects = setMap();
         classes = setClasses();
-        controllers = setControllers();
     }
 
-    private Map<Class, Class> setClasses(){
-        Map<Class, Class> classes = new HashMap<>();
-        classes.put(IUserDAO.class, UserDAO.class);
-        classes.put(StageFactory.class, StageFactory.class);
-        classes.put(Storage.class, Storage.class);
+    private Map<Class, Class> setMap(){
+        Map<Class, Class> injects = new HashMap<>();
+        injects.put(IUserDAO.class, UserDAO.class);
+        injects.put(StageFactory.class, StageFactory.class);
+        injects.put(Storage.class, Storage.class);
+        return injects;
+    }
+
+    private List<Class> setClasses(){
+        List<Class> classes = new ArrayList<>();
+        // Controllers
+        classes.add(LoginController.class);
+        classes.add(HomeController.class);
+        classes.add(CadastroController.class);
         return classes;
-    }
-
-    private List<Class> setControllers(){
-        List<Class> controllers = new ArrayList<>();
-        controllers.add(LoginController.class);
-        controllers.add(HomeController.class);
-        controllers.add(CadastroController.class);
-        return controllers;
     }
 
     public void make(){
         try {
-            for (Class clazz : controllers) {
+            for (Class clazz : classes) {
                 for (Field field : clazz.getDeclaredFields()) {
                     if (field.getAnnotation(Inject.class) == null)
                         continue;
                     setInstance(field);
                 }
             }
-        } catch (IllegalAccessException|NoSuchMethodException|InvocationTargetException e) {
-            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            System.out.println("IAE: :" +e.getMessage());
+        } catch(NoSuchMethodException e){
+            System.out.println("NSME: :" +e.getMessage());
+        } catch (InvocationTargetException e){
+            System.out.println("ITE: :" +e.getMessage());
         }
     }
 
     private void setInstance(Field field) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         field.setAccessible(true);
-        field.set(null, classes.get(field.getType()).getMethod("getInstance").invoke(null));
+        Object obj = injects.get(field.getType()).getMethod("getInstance").invoke(null);
+        field.set(null, obj);
     }
 }

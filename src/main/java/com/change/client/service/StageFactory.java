@@ -13,8 +13,8 @@ import java.util.Map;
 public class StageFactory {
     private static StageFactory instance;
 
-    private Stage stage;
-    private Map<EnumScenes, Scene> scenes;
+    private final Stage stage;
+    private final Map<EnumScenes, Scene> scenes;
 
     private StageFactory(Stage stage){
         this.stage = stage;

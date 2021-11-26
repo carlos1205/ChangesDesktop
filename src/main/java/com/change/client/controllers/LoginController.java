@@ -4,7 +4,6 @@ import com.change.Security.HashGenerator;
 import com.change.client.EnumScenes;
 import com.change.client.config.annotations.Inject;
 import com.change.client.repository.user.IUserDAO;
-import com.change.client.repository.user.UserDAO;
 import com.change.client.service.StageFactory;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -30,7 +29,7 @@ public class LoginController {
     private Text errors;
 
     public void handleLogin(ActionEvent actionEvent) throws NoSuchAlgorithmException, UnsupportedEncodingException {
-        if(true == userDao.login(email.getText(), new HashGenerator().hashGenerate(password.getText()).toLowerCase())) {
+        if(userDao.login(email.getText(), new HashGenerator().hashGenerate(password.getText()).toLowerCase())) {
             this.clear();
             stageFactory.changeScene(EnumScenes.HOME);
         }else {
