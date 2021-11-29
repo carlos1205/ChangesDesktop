@@ -19,6 +19,7 @@ com/change/client/service/StageFactory.class
 com/change/server/operations/Logout.class
 com/change/client/service/connection/ClientConnection.class
 com/change/client/repository/user/UserDAO.class
+com/change/server/repository/UserDAO.class
 com/change/server/operations/IOperation.class
 com/change/client/controllers/HomeController.class
 com/change/server/service/OperationsFactory.class

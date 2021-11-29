@@ -4,6 +4,7 @@ import com.change.Security.HashGenerator;
 import com.change.model.User;
 import com.change.operations.EnumOperations;
 import com.change.server.ClientConnection;
+import com.change.server.repository.UserDAO;
 import com.change.server.service.ClientsManager;
 import org.json.JSONObject;
 
@@ -47,14 +48,9 @@ public class Login extends IOperation{
     }
 
     private boolean Login(String email, String password){
-        try{
-            String passMock = new HashGenerator().hashGenerate("root");
-            String emailMock = "root";
-            if(email.equals(emailMock) && passMock.equalsIgnoreCase(password))
-                return true;
-        }catch(NoSuchAlgorithmException | UnsupportedEncodingException e){
-            System.out.println("Auth: "+e.getMessage());
-        }
+        User user = UserDAO.getInstance().getUserWithEmail(email);
+        if( (null != user) && password.equalsIgnoreCase(user.getPassword()))
+            return true;
         return false;
     }
 

@@ -2,6 +2,7 @@
 /home/carlos/Documents/Faculdade/2021-2/PP/client/src/main/java/com/change/client/service/StageFactory.java
 /home/carlos/Documents/Faculdade/2021-2/PP/client/src/main/java/com/change/model/User.java
 /home/carlos/Documents/Faculdade/2021-2/PP/client/src/main/java/com/change/client/ChangeApplication.java
+/home/carlos/Documents/Faculdade/2021-2/PP/client/src/main/java/com/change/server/repository/UserDAO.java
 /home/carlos/Documents/Faculdade/2021-2/PP/client/src/main/java/com/change/client/service/connection/ClientConnection.java
 /home/carlos/Documents/Faculdade/2021-2/PP/client/src/main/java/com/change/client/repository/user/UserDAO.java
 /home/carlos/Documents/Faculdade/2021-2/PP/client/src/main/java/com/change/Security/HashGenerator.java

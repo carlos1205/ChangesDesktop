@@ -5,7 +5,7 @@ module com.change.client {
     requires org.hibernate.commons.annotations;
     requires org.hibernate.orm.core;
     requires java.persistence;
-
+    requires org.postgresql.jdbc;
 
     opens com.change.client to javafx.fxml;
     exports com.change.client;

@@ -45,7 +45,7 @@ public class Cadastro extends IOperation{
             messages.add("Sucesso");
             client.send(makeResponse(false, messages));
         }else{
-            messages.add("Email ou Senha inválido.");
+            messages.add("Usuário já cadastrado.");
             messages.add("no error");
             client.send(makeResponse(true, messages));
             client.close();

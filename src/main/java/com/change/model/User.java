@@ -1,15 +1,20 @@
 package com.change.model;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.*;
 
 @Entity
 @Table(name = "user")
 public class User implements Serializable {
     @Id
+    @Column(name = "codigo")
     private String id;
+    @Column
     private String name;
+    @Column
     private String email;
+    @Column
     private String password;
 
     public User(){}
@@ -53,5 +58,22 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public boolean equals(Object obj){
+        if(this == obj)
+            return true;
+
+        if(!(obj instanceof User))
+            return false;
+
+        User user = (User) obj;
+        return user.getId().equals(id);
+    }
+
+    @Override
+    public int hashCode(){
+        return Objects.hash(id, email);
     }
 }
