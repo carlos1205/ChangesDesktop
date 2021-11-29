@@ -1,6 +1,12 @@
 package com.change.model;
 
-public class User {
+import java.io.Serializable;
+import javax.persistence.*;
+
+@Entity
+@Table(name = "user")
+public class User implements Serializable {
+    @Id
     private String id;
     private String name;
     private String email;

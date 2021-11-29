@@ -29,16 +29,16 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleCadastrar" prefHeight="24.0" prefWidth="107.0" text="CADASTRAR" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="TOP" />
+            <TextField fx:id="name" promptText="Name" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1" GridPane.valignment="TOP" />
             <TextField fx:id="email" prefHeight="24.0" prefWidth="217.0" promptText="Email" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
             <PasswordField fx:id="password" promptText="Password" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleCadastrar" prefHeight="24.0" prefWidth="107.0" text="CADASTRAR" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="TOP" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="CADASTRO" textAlignment="CENTER" wrappingWidth="116.75634765625" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                <font>
                   <Font size="15.0" />
                </font>
             </Text>
             <Hyperlink onAction="#handleGoBack" style="-fx-underline: true;" text="Voltar" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="BOTTOM" />
-            <TextField fx:id="name" promptText="Name" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1" GridPane.valignment="TOP" />
             <Text fx:id="errors" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="287.7294921875" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
          </children>
       </GridPane>

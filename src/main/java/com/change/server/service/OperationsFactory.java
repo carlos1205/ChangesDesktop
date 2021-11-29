@@ -1,5 +1,6 @@
 package com.change.server.service;
 
+import com.change.server.operations.Cadastro;
 import com.change.server.operations.IOperation;
 import com.change.server.operations.Login;
 import com.change.server.operations.Logout;
@@ -22,6 +23,7 @@ public class OperationsFactory {
     private IOperation make(){
         IOperation op = new Login();
         op = new Logout(op);
+        op = new Cadastro(op);
         return op;
     }
 

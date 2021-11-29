@@ -1,5 +1,7 @@
 package com.change.client.service;
 
+import java.util.List;
+
 public class Storage {
     private static Storage instance;
     private String userId;

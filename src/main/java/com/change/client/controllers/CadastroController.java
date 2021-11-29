@@ -1,5 +1,6 @@
 package com.change.client.controllers;
 
+import com.change.Security.HashGenerator;
 import com.change.client.EnumScenes;
 import com.change.client.config.annotations.Inject;
 import com.change.client.repository.user.IUserDAO;
@@ -10,6 +11,8 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 public class CadastroController {
@@ -27,8 +30,8 @@ public class CadastroController {
     @FXML
     private Text errors;
 
-    public void handleCadastrar(ActionEvent event){
-        if(userDao.cadastrar(name.getText(), email.getText(), password.getText())){
+    public void handleCadastrar(ActionEvent event) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+        if(userDao.cadastrar(name.getText(), email.getText(), new HashGenerator().hashGenerate(password.getText()).toLowerCase())){
             this.clear();
             stageFactory.changeScene(EnumScenes.LOGIN);
         }else{
@@ -62,21 +65,5 @@ public class CadastroController {
         this.email.setText("");
         this.password.setText("");
         this.errors.setText("");
-    }
-
-    public TextField getName() {
-        return name;
-    }
-
-    public TextField getEmail() {
-        return email;
-    }
-
-    public PasswordField getPassword() {
-        return password;
-    }
-
-    public Text getErrors() {
-        return errors;
     }
 }

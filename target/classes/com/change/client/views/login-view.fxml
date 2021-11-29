@@ -29,9 +29,9 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleLogin" prefHeight="24.0" prefWidth="107.0" text="LOGAR" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="TOP" />
             <TextField fx:id="email" prefHeight="24.0" prefWidth="217.0" promptText="Email" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
             <PasswordField fx:id="password" promptText="Password" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="2" />
+            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleLogin" prefHeight="24.0" prefWidth="107.0" text="LOGAR" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="TOP" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="LOGIN" textAlignment="CENTER" wrappingWidth="116.75634765625" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
                <font>
                   <Font size="15.0" />
@@ -39,6 +39,7 @@
             </Text>
             <Hyperlink onAction="#handleCadastrar" style="-fx-underline: true;" text="Cadastrar" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="BOTTOM" />
             <Text fx:id="errors" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="277.7294921875" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+            <Text fx:id="success" fill="#009e47" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="298.7294921875" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="TOP" />
          </children>
       </GridPane>
    </children>

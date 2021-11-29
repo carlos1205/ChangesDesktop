@@ -10,4 +10,5 @@ public interface IUserDAO {
     boolean cadastrar(String name, String email, String password);
     User getUser(String id);
     List<String> getErrors();
+    List<String> getSuccess();
 }

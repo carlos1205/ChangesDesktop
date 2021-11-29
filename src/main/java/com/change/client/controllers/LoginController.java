@@ -27,6 +27,9 @@ public class LoginController {
     private PasswordField password;
     @FXML
     private Text errors;
+    @FXML
+    private Text success;
+
 
     public void handleLogin(ActionEvent actionEvent) throws NoSuchAlgorithmException, UnsupportedEncodingException {
         if(userDao.login(email.getText(), new HashGenerator().hashGenerate(password.getText()).toLowerCase())) {
@@ -35,6 +38,13 @@ public class LoginController {
         }else {
             setErrors(userDao.getErrors());
         }
+    }
+    @FXML
+    public void initialize(){
+        List<String> success = userDao.getSuccess();
+        if(null != success)
+            setSucess(success);
+
     }
 
     public void handleCadastrar(ActionEvent actionEvent) {
@@ -56,6 +66,14 @@ public class LoginController {
                 .reduce("", String::concat);
 
         this.errors.setText(errs);
+    }
+
+    private void setSucess(List<String> sucess){
+        String suss = sucess.stream()
+                .map(error -> error + "\n")
+                .reduce("", String::concat);
+
+        this.success.setText(suss);
     }
 
     private void clear(){

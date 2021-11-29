@@ -1,5 +1,6 @@
 package com.change.server.operations;
 
+import com.change.operations.EnumOperations;
 import com.change.server.ClientConnection;
 import com.change.server.service.ClientsManager;
 import org.json.JSONObject;
