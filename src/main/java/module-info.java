@@ -11,4 +11,9 @@ module com.change.client {
     exports com.change.client;
     exports com.change.client.controllers;
     opens com.change.client.controllers to javafx.fxml;
+
+    opens com.change.server to javafx.fxml;
+    exports com.change.server;
+    exports com.change.server.GUI.controllers;
+    opens com.change.server.GUI.controllers to javafx.fxml;
 }
