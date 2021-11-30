@@ -2,10 +2,6 @@ package com.change.server.repository;
 
 import com.change.model.User;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -14,7 +10,7 @@ public class UserDAO {
     private static UserDAO instance;
 //    private EntityManagerFactory emf;
 
-    private List<User> users;
+    private final List<User> users;
 
     public static UserDAO getInstance(){
         if(null == instance) instance = new UserDAO();
@@ -39,7 +35,6 @@ public class UserDAO {
         UUID uuid = UUID.randomUUID();
         user.setId(uuid.toString());
         createUser(user);
-
         return true;
     }
 

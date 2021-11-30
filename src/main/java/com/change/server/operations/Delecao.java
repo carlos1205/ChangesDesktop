@@ -1,6 +1,5 @@
 package com.change.server.operations;
 
-import com.change.model.User;
 import com.change.operations.EnumOperations;
 import com.change.server.ClientConnection;
 import com.change.server.repository.UserDAO;

@@ -50,9 +50,7 @@ public class Edicao extends IOperation{
     }
 
     private boolean IsValid(User user){
-        if("" == user.getEmail() || "" == user.getName())
-            return false;
-        return true;
+        return !(user.getEmail().equals("") || user.getName().equals(""));
     }
 
     private User parseJsonUser(JSONObject message){

@@ -4,7 +4,6 @@ import com.change.model.User;
 import com.change.operations.EnumOperations;
 import com.change.server.ClientConnection;
 import com.change.server.repository.UserDAO;
-import com.change.server.service.ClientsManager;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -51,9 +50,7 @@ public class Cadastro extends IOperation{
     }
 
     private boolean IsValid(User user){
-        if("" == user.getEmail() || "" == user.getName())
-            return false;
-        return true;
+        return !(user.getEmail().equals("") || user.getName().equals(""));
     }
 
     private User parseJsonUser(JSONObject message){
