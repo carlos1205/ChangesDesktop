@@ -13,25 +13,12 @@ public class ChangeApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException{
         StageFactory factory = StageFactory.getInstance(stage);
-        config();
         Config.getInstance().make();
         stage.setTitle("Change");
-        factory.changeScene(EnumScenes.LOGIN);
+        factory.changeScene(EnumScenes.INIT_CLIENT);
     }
 
     public static void main(String[] args) {
         launch();
-    }
-
-    private static void config(){
-        Scanner in = new Scanner(System.in);
-
-        System.out.print("Digite o IP do servidor: ");
-        String host = in.nextLine();
-        ClientConnection.setHost(host);
-
-        System.out.print("Digite a porta: ");
-        int port = Integer.parseInt(in.nextLine());
-        ClientConnection.setPort(port);
     }
 }

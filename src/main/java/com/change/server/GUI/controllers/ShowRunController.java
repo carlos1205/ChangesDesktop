@@ -1,7 +1,5 @@
 package com.change.server.GUI.controllers;
 
-import com.change.server.GUI.EnumScenes;
-import com.change.server.GUI.StageFactory;
 import com.change.server.Server;
 import javafx.fxml.FXML;
 import javafx.scene.text.Text;
@@ -16,8 +14,6 @@ public class ShowRunController {
     }
 
     public void handleStop(){
-        Server.getInstance(0).close();
-        this.porta.setText("");
-        StageFactory.getInstance().changeScene(EnumScenes.INPUT);
+        System.exit(0);
     }
 }
