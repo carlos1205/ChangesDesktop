@@ -1,6 +1,5 @@
 package com.change.server.operations;
 
-import com.change.Security.HashGenerator;
 import com.change.model.User;
 import com.change.operations.EnumOperations;
 import com.change.server.ClientConnection;
@@ -9,8 +8,6 @@ import com.change.server.service.ClientsManager;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
