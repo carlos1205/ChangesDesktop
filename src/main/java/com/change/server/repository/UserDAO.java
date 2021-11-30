@@ -43,6 +43,25 @@ public class UserDAO {
         return true;
     }
 
+    public boolean editar(User user){
+        User newUser = getUserWithId(user.getId());
+        if(null == newUser)
+            return false;
+
+        newUser.setName(user.getName());
+        newUser.setEmail(user.getEmail());
+        newUser.setPassword(user.getPassword());
+        return true;
+    }
+
+    public boolean deletar(String id){
+        User user = getUserWithId(id);
+        if(null == user)
+            return false;
+
+        return users.remove(user);
+    }
+
     private boolean userExist(User newUser){
 //        EntityManager em = getEntityManager();
 //        int res = 0;
@@ -77,7 +96,16 @@ public class UserDAO {
         users.add(user);
     }
 
+    public boolean sendEmailRestorePass(String email){
+        User user = getUserWithEmail(email);
+        return null != user;
+    }
+
     public User getUserWithEmail(String email){
         return users.stream().filter(user -> email.equals(user.getEmail())).findFirst().orElse(null);
+    }
+
+    public User getUserWithId(String id){
+        return users.stream().filter(user -> id.equals(user.getId())).findFirst().orElse(null);
     }
 }

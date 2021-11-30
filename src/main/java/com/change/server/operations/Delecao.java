@@ -1,7 +1,9 @@
 package com.change.server.operations;
 
+import com.change.model.User;
 import com.change.operations.EnumOperations;
 import com.change.server.ClientConnection;
+import com.change.server.repository.UserDAO;
 import com.change.server.service.ClientsManager;
 import org.json.JSONObject;
 
@@ -9,13 +11,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Logout extends IOperation{
-    private static final EnumOperations operations = EnumOperations.LOGOUT;
-    public Logout(IOperation next){
+public class Delecao extends IOperation{
+    private static final EnumOperations operations = EnumOperations.DELETAR_USUARIO;
+    public Delecao(IOperation next){
         super(next);
     }
 
-    public Logout(){
+    public Delecao(){
         super();
     }
 
@@ -30,20 +32,15 @@ public class Logout extends IOperation{
     }
 
     private void make(ClientConnection client, List<String> messages) throws IOException{
-        boolean hasError = true;
-        if(logout(client)){
-            messages.add("Logout realizado");
-            hasError = false;
+        if(UserDAO.getInstance().deletar(ClientsManager.getInstance().getId(client.getIP()))) {
+            messages.add("Usuário apagado");
+            client.send(makeResponse(false, messages));
+            ClientsManager.getInstance().removeClient(client.getIP());
+            client.close();
         }else{
-            messages.add("Falha ao realizar Logout");
+            messages.add("Usuário não encontrado.");
+            client.send(makeResponse(true, messages));
         }
-        client.send(makeResponse(hasError, messages));
-        client.close();
-    }
-
-    private boolean logout(ClientConnection client){
-        ClientsManager.getInstance().removeClient(client.getIP());
-        return true;
     }
 
     private String makeResponse(boolean error, List<String> messages){
@@ -53,5 +50,4 @@ public class Logout extends IOperation{
         obj.put("mensagem", messages);
         return obj.toString();
     }
-
 }

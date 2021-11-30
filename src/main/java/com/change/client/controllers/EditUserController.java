@@ -41,6 +41,7 @@ public class EditUserController {
     }
 
     public void handleDelecao(ActionEvent event) {
+        this.clear();
         stageFactory.changeScene(EnumScenes.EXCLUIR_USER);
     }
 

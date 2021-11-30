@@ -73,6 +73,7 @@ public class UserDAO implements IUserDAO{
     public boolean forgetPass(String email){
         ClientConnection connection = ClientConnection.getInstance();
         JSONObject response = connection.send(parseForgotPassToJson(email));
+        connection.close();
         return extractResponse(response);
     }
 

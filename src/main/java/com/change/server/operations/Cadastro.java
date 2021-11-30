@@ -40,14 +40,14 @@ public class Cadastro extends IOperation{
         }
 
         if(UserDAO.getInstance().cadastrar(user)) {
-            ClientsManager.getInstance().addClient(client.getIP(), user.getId());
-            messages.add("Sucesso");
+            messages.add("Usuário cadastrado com sucesso");
             client.send(makeResponse(false, messages));
         }else{
             messages.add("Usuário já cadastrado.");
             client.send(makeResponse(true, messages));
-            client.close();
         }
+
+        client.close();
     }
 
     private boolean IsValid(User user){

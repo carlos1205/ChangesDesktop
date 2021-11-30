@@ -26,4 +26,8 @@ public class ClientsManager {
     public void removeClient(String ip){
         this.clients.remove(ip);
     }
+
+    public String getId(String ip){
+        return clients.get(ip);
+    }
 }

@@ -1,9 +1,6 @@
 package com.change.server.service;
 
-import com.change.server.operations.Cadastro;
-import com.change.server.operations.IOperation;
-import com.change.server.operations.Login;
-import com.change.server.operations.Logout;
+import com.change.server.operations.*;
 
 public class OperationsFactory {
     private static OperationsFactory instance;
@@ -24,6 +21,9 @@ public class OperationsFactory {
         IOperation op = new Login();
         op = new Logout(op);
         op = new Cadastro(op);
+        op = new Edicao(op);
+        op = new Delecao(op);
+        op = new RecuperarSenha(op);
         return op;
     }
 
