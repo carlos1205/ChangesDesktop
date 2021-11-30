@@ -34,7 +34,6 @@ public class Cadastro extends IOperation{
     private void make(User user, ClientConnection client, List<String> messages) throws IOException{
         if(!IsValid(user)){
             messages.add("Nenhum campo pode ser vazio");
-            messages.add("no error");
             client.send(makeResponse(true, messages));
             client.close();
             return;
@@ -46,7 +45,6 @@ public class Cadastro extends IOperation{
             client.send(makeResponse(false, messages));
         }else{
             messages.add("Usuário já cadastrado.");
-            messages.add("no error");
             client.send(makeResponse(true, messages));
             client.close();
         }

@@ -52,6 +52,11 @@ public class LoginController {
         stageFactory.changeScene(EnumScenes.CADASTRO);
     }
 
+    public void handleForgetPass(ActionEvent actionEvent){
+        this.clear();
+        stageFactory.changeScene(EnumScenes.FORGET_PASS_SEND);
+    }
+
     public static void setUserDao(IUserDAO userDao) {
         LoginController.userDao = userDao;
     }

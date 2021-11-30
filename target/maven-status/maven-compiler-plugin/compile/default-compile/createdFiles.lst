@@ -11,6 +11,7 @@ module-info.class
 com/change/client/controllers/CadastroController.class
 com/change/client/ChangeApplication.class
 com/change/server/operations/Cadastro.class
+com/change/client/controllers/EditUserController.class
 com/change/operations/EnumOperations.class
 com/change/client/config/Config.class
 com/change/server/TCPServer.class

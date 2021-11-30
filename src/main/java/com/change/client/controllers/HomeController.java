@@ -7,7 +7,7 @@ import com.change.client.service.StageFactory;
 import com.change.client.service.Storage;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.text.Text;
+import javafx.scene.control.Label;
 
 public class HomeController {
     @Inject
@@ -16,12 +16,19 @@ public class HomeController {
     private static StageFactory stageFactory;
 
     @FXML
-    private Text welcome;
+    private Label welcome;
 
     public void handleLogout(ActionEvent event) {
         userDao.logout();
-        Storage.getInstance().setUserId("");
         stageFactory.changeScene(EnumScenes.LOGIN);
+    }
+
+    public void handleEdicao(ActionEvent event) {
+        stageFactory.changeScene(EnumScenes.EDIT_USER);
+    }
+
+    public void handleDelecao(ActionEvent event) {
+        stageFactory.changeScene(EnumScenes.EXCLUIR_USER);
     }
 
     @FXML

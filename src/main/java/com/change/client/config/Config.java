@@ -1,9 +1,7 @@
 package com.change.client.config;
 
 import com.change.client.config.annotations.Inject;
-import com.change.client.controllers.CadastroController;
-import com.change.client.controllers.HomeController;
-import com.change.client.controllers.LoginController;
+import com.change.client.controllers.*;
 import com.change.client.repository.user.IUserDAO;
 import com.change.client.repository.user.UserDAO;
 import com.change.client.service.StageFactory;
@@ -46,6 +44,9 @@ public class Config {
         classes.add(LoginController.class);
         classes.add(HomeController.class);
         classes.add(CadastroController.class);
+        classes.add(EditUserController.class);
+        classes.add(ExcluirUserController.class);
+        classes.add(ForgetPassSendController.class);
         return classes;
     }
 

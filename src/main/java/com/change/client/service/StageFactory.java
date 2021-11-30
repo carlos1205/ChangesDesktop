@@ -47,7 +47,7 @@ public class StageFactory {
     private Scene buildScene(EnumScenes scene){
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(ChangeApplication.class.getResource("views/"+scene.getFileName()));
-            Scene newScene = new Scene(fxmlLoader.load(), 600, 400);
+            Scene newScene = new Scene(fxmlLoader.load(), 640, 400);
             scenes.put(scene, newScene);
             return newScene;
         } catch (IOException e) {
