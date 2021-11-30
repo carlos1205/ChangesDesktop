@@ -5,7 +5,8 @@ public enum EnumOperations {
     LOGOUT(8),
     CADASTRO_USUARIO(5),
     EDICAO_USUARIO(10),
-    DELETAR_USUARIO(13);
+    DELETAR_USUARIO(13),
+    RECUPERAR_SENHA(7);
 
     private final int number;
     EnumOperations(int number){

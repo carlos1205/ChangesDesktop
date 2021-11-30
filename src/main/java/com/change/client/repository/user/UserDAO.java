@@ -40,18 +40,25 @@ public class UserDAO implements IUserDAO{
         return !res;
     }
 
-    public  boolean cadastrar(String name, String email, String password){
-        ClientConnection connection = ClientConnection.getInstance();
-        JSONObject response = connection.send(parseCadastroToJson(name, email, password));
-        boolean res = Boolean.parseBoolean(response.get("erro").toString());
+    public boolean create(String name, String email, String password){
+        boolean res = createOrUpdate(name, email, password, EnumOperations.CADASTRO_USUARIO);
+        ClientConnection.getInstance().close();
+        return res;
+    }
 
-        if(!res){
-            this.success.add(response.getJSONArray("mensagem").getString(0));
+    public boolean update(String name, String email, String password){
+        return createOrUpdate(name, email, password, EnumOperations.EDICAO_USUARIO);
+    }
+
+    public boolean delete(){
+        ClientConnection connection = ClientConnection.getInstance();
+        JSONObject json = new JSONObject().put("operacao", EnumOperations.DELETAR_USUARIO.getNumber());
+        json = connection.send(json.toString());
+        boolean res = Boolean.parseBoolean(json.get("erro").toString());
+        if(res)
+            this.errors.add(json.getJSONArray("mensagem").getString(0));
+        else
             connection.close();
-        }else {
-            this.errors.add(response.getJSONArray("mensagem").getString(0));
-            connection.close();
-        }
         return !res;
     }
 
@@ -61,6 +68,12 @@ public class UserDAO implements IUserDAO{
 
         connection.send(send.toString());
         connection.close();
+    }
+
+    public boolean forgetPass(String email){
+        ClientConnection connection = ClientConnection.getInstance();
+        JSONObject response = connection.send(parseForgotPassToJson(email));
+        return extractResponse(response);
     }
 
     public List<String> getErrors(){
@@ -75,6 +88,24 @@ public class UserDAO implements IUserDAO{
         return sucs;
     }
 
+    private boolean createOrUpdate(String name, String email, String password, EnumOperations operation){
+        ClientConnection connection = ClientConnection.getInstance();
+        JSONObject response = connection.send(parseCompleteUserToJson(name, email, password, operation.getNumber()));
+        return extractResponse(response);
+    }
+
+    private boolean extractResponse(JSONObject json){
+        boolean res = Boolean.parseBoolean(json.get("erro").toString());
+
+        if(!res){
+            this.success.add(json.getJSONArray("mensagem").getString(0));
+        }else {
+            this.errors.add(json.getJSONArray("mensagem").getString(0));
+        }
+
+        return !res;
+    }
+
     private String parseLoginToJson(String email, String password){
         return new JSONObject()
                 .put("operacao", EnumOperations.LOGIN.getNumber())
@@ -84,9 +115,9 @@ public class UserDAO implements IUserDAO{
                 ).toString();
     }
 
-    private String parseCadastroToJson(String name, String email, String password){
+    private String parseCompleteUserToJson(String name, String email, String password, int op){
         return new JSONObject()
-                .put("operacao", EnumOperations.CADASTRO_USUARIO.getNumber())
+                .put("operacao", op)
                 .put("data", new JSONObject()
                         .put("nome_usuario", name)
                         .put("email", email)
@@ -94,9 +125,11 @@ public class UserDAO implements IUserDAO{
                 ).toString();
     }
 
-    public User getUser(String id){
-        if(id.equals("asht7123x"))
-            return User.make("asht7123x", "Carlos de Souza", "carlos@gmail.com", "Ca120599");
-        return null;
+    private String parseForgotPassToJson(String email){
+        return new JSONObject()
+                .put("operacao", EnumOperations.RECUPERAR_SENHA.getNumber())
+                .put("data", new JSONObject()
+                        .put("email", email)
+                ).toString();
     }
 }

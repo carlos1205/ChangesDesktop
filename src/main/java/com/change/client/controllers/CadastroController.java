@@ -31,7 +31,7 @@ public class CadastroController {
     private Text errors;
 
     public void handleCadastrar(ActionEvent event) throws UnsupportedEncodingException, NoSuchAlgorithmException {
-        if(userDao.cadastrar(name.getText(), email.getText(), new HashGenerator().hashGenerate(password.getText()).toLowerCase())){
+        if(userDao.create(name.getText(), email.getText(), new HashGenerator().hashGenerate(password.getText()).toLowerCase())){
             this.clear();
             stageFactory.changeScene(EnumScenes.LOGIN);
         }else{

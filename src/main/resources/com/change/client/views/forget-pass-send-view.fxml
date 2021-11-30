@@ -37,7 +37,7 @@
                 <Hyperlink onAction="#handleGoBack" style="-fx-underline: true;" text="Voltar" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="BOTTOM" />
                 <TextField fx:id="email" promptText="Email" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="2" GridPane.valignment="TOP" />
                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Email de recuperaçao de senha" textAlignment="CENTER" wrappingWidth="383.65625" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                <Text fx:id="errors" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="383.7294921875" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                <Text fx:id="errors" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="383.7294921875" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             </children>
         </GridPane>
     </children>

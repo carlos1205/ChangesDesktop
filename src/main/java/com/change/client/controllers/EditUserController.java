@@ -32,6 +32,12 @@ public class EditUserController {
 
     public void handleEdit(ActionEvent event) throws UnsupportedEncodingException, NoSuchAlgorithmException {
         System.out.println("Editado");
+        if(userDao.update(name.getText(), email.getText(), new HashGenerator().hashGenerate(password.getText()).toLowerCase())){
+            this.clear();
+            stageFactory.changeScene(EnumScenes.HOME);
+        }else{
+            setErrors(userDao.getErrors());
+        }
     }
 
     public void handleDelecao(ActionEvent event) {

@@ -28,9 +28,12 @@ public class ForgetPassSendController {
     }
 
     public void handleSend(ActionEvent event){
-        System.out.println("send!");
-        System.out.println(event.getEventType());
-        this.clear();
+        if(userDao.forgetPass(email.getText())){
+            this.clear();
+            stageFactory.changeScene(EnumScenes.LOGIN);
+        } else{
+            setErrors(userDao.getErrors());
+        }
     }
 
     public static void setUserDao(IUserDAO userDao) {
