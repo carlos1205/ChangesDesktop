@@ -5,11 +5,9 @@ import com.change.server.GUI.StageFactory;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-
 public class TCPServer extends Application {
     @Override
-    public void start(Stage stage) throws IOException{
+    public void start(Stage stage){
         StageFactory factory = StageFactory.getInstance(stage);
         stage.setTitle("Server");
         factory.changeScene(EnumScenes.INPUT);
