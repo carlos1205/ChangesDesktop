@@ -11,14 +11,14 @@
     <children>
         <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
             <children>
-                <Text layoutX="244.0" layoutY="123.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="Informe os dados do Servidor" textAlignment="CENTER" wrappingWidth="154.7294921875">
+                <Text layoutX="236.0" layoutY="123.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="Informe os dados do Servidor" textAlignment="CENTER" wrappingWidth="171.0">
                     <font>
                         <Font size="15.0" />
                     </font>
                 </Text>
-                <TextField fx:id="host" layoutX="235.0" layoutY="184.0" promptText="IP do Servidor" />
-                <TextField fx:id="port" layoutX="235.0" layoutY="225.0" promptText="Porta" />
-                <Button layoutX="244.0" layoutY="268.0" mnemonicParsing="false" onAction="#handleStart" prefHeight="24.0" prefWidth="155.0" style="-fx-background-color: green;" text="Iniciar" textAlignment="CENTER" textFill="WHITE" />
+                <TextField fx:id="host" layoutX="235.0" layoutY="184.0" prefHeight="24.0" prefWidth="171.0" promptText="IP do Servidor" />
+                <TextField fx:id="port" layoutX="235.0" layoutY="225.0" prefHeight="24.0" prefWidth="171.0" promptText="Porta" />
+                <Button layoutX="235.0" layoutY="268.0" mnemonicParsing="false" onAction="#handleStart" prefHeight="24.0" prefWidth="171.0" style="-fx-background-color: green;" text="Iniciar" textAlignment="CENTER" textFill="WHITE" />
             </children>
         </AnchorPane>
     </children>
