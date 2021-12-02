@@ -20,4 +20,13 @@ Os arquivos contendo o Main estão em:
 
 **Cliente:** change/src/main/java/com/change/client/ChangeApplication.java
 
+#### Possivel erro ao compilar
+
+Ao rodar o maven install, dependendo da maquina pade surgir um erro, causado pela versão
+do java presente no maven compile.
+Nesse caso, basta mudar a versão do java no maven para a versão presente na maquina.
+
+**OBS: a aplicação precisa da jdk-11 ou superior**
+
+
 Autoria: Carlos de Souza Lima
