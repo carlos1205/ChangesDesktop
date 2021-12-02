@@ -5,6 +5,7 @@ import com.change.client.config.annotations.Inject;
 import com.change.client.repository.user.IUserDAO;
 import com.change.client.service.StageFactory;
 import com.change.client.service.Storage;
+import com.change.model.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -17,6 +18,9 @@ public class HomeController {
 
     @FXML
     private Label welcome;
+
+    @FXML
+    private Label user;
 
     public void handleLogout(ActionEvent event) {
         userDao.logout();
@@ -33,7 +37,9 @@ public class HomeController {
 
     @FXML
     public void initialize(){
-        welcome.setText("Seja bem-vindo ao Change.\n");
+        User user = Storage.getInstance().getUser();
+        welcome.setText("Seja bem-vindo ao Change.");
+        this.user.setText(user.getName());
     }
 
     public static void setUserDao(IUserDAO userDao) {

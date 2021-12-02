@@ -8,6 +8,7 @@ com/change/server/GUI/StageFactory.class
 com/change/server/GUI/controllers/ShowRunController.class
 com/change/client/config/annotations/Inject.class
 com/change/client/EnumScenes.class
+com/change/client/controllers/InitController.class
 com/change/client/controllers/ForgetPassSendController.class
 com/change/server/GUI/EnumScenes.class
 com/change/server/operations/Login.class

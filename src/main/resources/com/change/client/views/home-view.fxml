@@ -48,21 +48,26 @@
       <menus>
         <Menu mnemonicParsing="false" text="Perfil">
           <items>
-            <MenuItem mnemonicParsing="false" text="Editar" onAction="#handleEdicao" />
+            <MenuItem mnemonicParsing="false" onAction="#handleEdicao" text="Editar" />
             <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Excluir" onAction="#handleDelecao" />
+            <MenuItem mnemonicParsing="false" onAction="#handleDelecao" text="Excluir" />
           </items>
         </Menu>
       </menus>
     </MenuBar>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <children>
-        <Label fx:id="welcome" alignment="CENTER" layoutX="155.0" layoutY="179.0" prefHeight="21.0" prefWidth="331.0" style="&#10;" textAlignment="CENTER" textFill="#9f9f9f" wrapText="false">
+        <Label fx:id="welcome" alignment="CENTER" layoutX="155.0" layoutY="137.0" prefHeight="21.0" prefWidth="331.0" style="&#10;" textAlignment="CENTER" textFill="#9f9f9f" wrapText="false">
           <font>
             <Font size="18.0" />
           </font>
         </Label>
-            <Button layoutX="269.0" layoutY="224.0" mnemonicParsing="false" onAction="#handleLogout" prefHeight="31.0" prefWidth="103.0" style="-fx-background-color: #a9a9a9; -fx-border-width: 0;" text="LOGOUT" textAlignment="CENTER" />
+        <Label fx:id="user" alignment="CENTER" layoutX="209.0" layoutY="175.0" prefHeight="18.0" prefWidth="223.0" textAlignment="CENTER">
+               <font>
+                  <Font size="15.0" />
+               </font>
+        </Label>
+        <Button layoutX="269.0" layoutY="210.0" mnemonicParsing="false" onAction="#handleLogout" prefHeight="31.0" prefWidth="103.0" style="-fx-background-color: #a9a9a9; -fx-border-width: 0;" text="LOGOUT" textAlignment="CENTER" />
       </children>
     </AnchorPane>
   </children>

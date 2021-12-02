@@ -1,13 +1,11 @@
 package com.change.client;
 
 import com.change.client.config.Config;
-import com.change.client.service.connection.ClientConnection;
 import com.change.client.service.StageFactory;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.Scanner;
 
 public class ChangeApplication extends Application {
     @Override

@@ -32,7 +32,7 @@ public class UserDAO implements IUserDAO{
         boolean res = Boolean.parseBoolean(response.get("erro").toString());
 
         if(!res){
-            Storage.getInstance().setUserId("asht7123x");
+            Storage.getInstance().setUser(extractUser(response));
         }else{
             this.errors.add(response.getJSONArray("mensagem").getString(0));
             connection.close();
@@ -105,6 +105,16 @@ public class UserDAO implements IUserDAO{
         }
 
         return !res;
+    }
+
+    private User extractUser(JSONObject response){
+        JSONObject json = response.getJSONObject("data");
+
+        User user = new User();
+        user.setId(json.getString("uuid"));
+        user.setName(json.getString("nome_usuario"));
+        user.setEmail(json.getString("email"));
+        return user;
     }
 
     private String parseLoginToJson(String email, String password){

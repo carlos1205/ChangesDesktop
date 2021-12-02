@@ -36,6 +36,11 @@ public class StageFactory {
         stage.show();
     }
 
+    public void doEdit(){
+        scenes.remove(EnumScenes.HOME);
+        scenes.remove(EnumScenes.EDIT_USER);
+    }
+
     private Scene getScene(EnumScenes scene){
         Scene response = scenes.get(scene);
         if(null == response)

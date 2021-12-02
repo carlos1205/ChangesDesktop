@@ -1,10 +1,10 @@
 package com.change.client.service;
 
-import java.util.List;
+import com.change.model.User;
 
 public class Storage {
     private static Storage instance;
-    private String userId;
+    private User userLogado;
 
     private Storage(){}
 
@@ -14,11 +14,11 @@ public class Storage {
         return instance;
     }
 
-    public void setUserId(String userId){
-        this.userId = userId;
+    public void setUser(User user){
+        this.userLogado = user;
     }
 
-    public String getUserId(){
-        return this.userId;
+    public User getUser(){
+        return this.userLogado;
     }
 }

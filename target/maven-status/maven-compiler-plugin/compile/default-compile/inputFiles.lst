@@ -20,6 +20,7 @@
 /home/carlos/Documents/Faculdade/2021-2/PP/client/src/main/java/com/change/operations/EnumOperations.java
 /home/carlos/Documents/Faculdade/2021-2/PP/client/src/main/java/com/change/server/service/OperationsFactory.java
 /home/carlos/Documents/Faculdade/2021-2/PP/client/src/main/java/com/change/server/GUI/StageFactory.java
+/home/carlos/Documents/Faculdade/2021-2/PP/client/src/main/java/com/change/client/controllers/InitController.java
 /home/carlos/Documents/Faculdade/2021-2/PP/client/src/main/java/com/change/server/operations/Delecao.java
 /home/carlos/Documents/Faculdade/2021-2/PP/client/src/main/java/com/change/client/service/connection/IConnection.java
 /home/carlos/Documents/Faculdade/2021-2/PP/client/src/main/java/com/change/client/repository/user/IUserDAO.java

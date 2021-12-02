@@ -41,7 +41,7 @@ public class Edicao extends IOperation{
 
         user.setId(ClientsManager.getInstance().getId(client.getIP()));
         if(UserDAO.getInstance().editar(user)) {
-            messages.add("Usuário atulizado.");
+            messages.add("Usuário atualizado.");
             client.send(makeResponse(false, messages));
         }else{
             messages.add("Usuário não encontrado.");

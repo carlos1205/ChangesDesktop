@@ -32,9 +32,10 @@ public class Login extends IOperation{
     }
 
     private void make(User user, ClientConnection client, List<String> messages) throws IOException{
-        if(Login(user, client)) {
+        User credentials = Login(user, client);
+        if(credentials != null) {
             messages.add("Usuário Logado");
-            client.send(makeResponse(false, messages));
+            client.send(makeResponse(false, messages, credentials));
         }else{
             messages.add("Email ou Senha inválido.");
             client.send(makeResponse(true, messages));
@@ -42,14 +43,14 @@ public class Login extends IOperation{
         }
     }
 
-    private boolean Login(User user, ClientConnection client){
+    private User Login(User user, ClientConnection client){
         User foundUser = UserDAO.getInstance().getUserWithEmail(user.getEmail());
 
         if((null != foundUser) && foundUser.getPassword().equalsIgnoreCase(user.getPassword())){
             ClientsManager.getInstance().addClient(client.getIP(), foundUser.getId());
-            return true;
+            return foundUser;
         }
-        return false;
+        return null;
     }
 
     private User parseJsonUser(JSONObject message){
@@ -57,6 +58,19 @@ public class Login extends IOperation{
         user.setEmail(message.getJSONObject("data").getString("email"));
         user.setPassword(message.getJSONObject("data").getString("senha"));
         return user;
+    }
+
+    private String makeResponse(boolean error, List<String> messages, User user){
+        JSONObject obj = new JSONObject();
+        obj.put("operacao", operations.getNumber());
+        obj.put("erro", error);
+        obj.put("mensagem", messages);
+        obj.put("data", new JSONObject()
+                .put("nome_usuario", user.getName())
+                .put("email", user.getEmail())
+                .put("uuid", user.getId())
+        );
+        return obj.toString();
     }
 
     private String makeResponse(boolean error, List<String> messages){

@@ -5,6 +5,8 @@ import com.change.client.EnumScenes;
 import com.change.client.config.annotations.Inject;
 import com.change.client.repository.user.IUserDAO;
 import com.change.client.service.StageFactory;
+import com.change.client.service.Storage;
+import com.change.model.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
@@ -30,9 +32,19 @@ public class EditUserController {
     @FXML
     private Text errors;
 
+    @FXML
+    public void initialize(){
+        User user = Storage.getInstance().getUser();
+        name.setText(user.getName());
+        email.setText(user.getEmail());
+    }
+
     public void handleEdit(ActionEvent event) throws UnsupportedEncodingException, NoSuchAlgorithmException {
         if(userDao.update(name.getText(), email.getText(), new HashGenerator().hashGenerate(password.getText()).toLowerCase())){
-            this.clear();
+            User user = Storage.getInstance().getUser();
+            user.setEmail(email.getText());
+            user.setName(name.getText());
+            StageFactory.getInstance().doEdit();
             stageFactory.changeScene(EnumScenes.HOME);
         }else{
             setErrors(userDao.getErrors());
@@ -66,8 +78,6 @@ public class EditUserController {
     }
 
     private void clear(){
-        this.name.setText("");
-        this.email.setText("");
         this.password.setText("");
         this.errors.setText("");
     }
