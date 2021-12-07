@@ -22,12 +22,6 @@ public class UserDAO {
         users = new ArrayList<>();
     }
 
-//    private EntityManager getEntityManager(){
-//        if(null == emf)
-//            emf = Persistence.createEntityManagerFactory("changes");
-//        return emf.createEntityManager();
-//    }
-
     public boolean cadastrar(User user){
         if(userExist(user))
             return false;
@@ -58,36 +52,11 @@ public class UserDAO {
     }
 
     private boolean userExist(User newUser){
-//        EntityManager em = getEntityManager();
-//        int res = 0;
-//        try{
-//            em.getTransaction().begin();
-//            Query query = em.createQuery("select COUNT(*) from users email = "+ user.getEmail(), User.class);
-//            res = query.getFirstResult();
-//        }catch(Exception e){
-//            System.out.println(e.getMessage());
-//        }finally {
-//            em.close();
-//            emf.close();
-//        }
-//        return (res > 0);
         long res = users.stream().filter(user -> user.getEmail().equals(newUser.getEmail())).count();
         return res > 0;
     }
 
     private void createUser(User user){
-//        EntityManager em = getEntityManager();
-//        try{
-//            em.getTransaction().begin();
-//            em.persist(user);
-//            em.getTransaction().commit();
-//        }catch (Exception e){
-//            em.getTransaction().rollback();
-//            System.out.println(e.getMessage());
-//        }finally {
-//            em.close();
-//            emf.close();
-//        }
         users.add(user);
     }
 

@@ -8,6 +8,5 @@ public interface IItemDAO<T> {
     boolean update(T item);
     boolean delete(String id);
 
-    List<String> getErrors();
-    List<String> getSuccess();
+    List<String> getMessage();
 }

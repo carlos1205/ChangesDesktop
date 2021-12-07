@@ -60,7 +60,6 @@ public class CadastroSPController implements IMenuHandle{
     }
 
     public void handleCadastrar() {
-        System.out.println("Cadastrar: ");
         if(valida()){
             Item item = mountItem();
             String code = itemDao.insert(item);
@@ -69,7 +68,8 @@ public class CadastroSPController implements IMenuHandle{
                 this.clear();
                 stageFactory.changeScene(EnumScenes.HOME);
             }else{
-                this.setErrors(itemDao.getErrors());
+                String error = itemDao.getMessage().get(0);
+                this.setErrors(Arrays.asList(error));
             }
             System.out.println("Cadastrado");
         }else{
