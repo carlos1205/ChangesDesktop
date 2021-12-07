@@ -16,4 +16,7 @@ public enum EnumVendaDoacaoTroca {
     public char getValue(){
         return value;
     }
+    public String getName(){
+        return name;
+    }
 }

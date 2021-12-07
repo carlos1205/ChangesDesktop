@@ -61,4 +61,9 @@ public class HomeController implements IMenuHandle{
     public void handleDelecao() {
         menu.handleDelecao();
     }
+
+    @Override
+    public void handleCadastrarItem() {
+        menu.handleCadastrarItem();
+    }
 }

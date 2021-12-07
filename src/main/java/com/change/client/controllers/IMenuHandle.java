@@ -4,4 +4,5 @@ public interface IMenuHandle {
     void handleGoHome();
     void handleGoEdit();
     void handleDelecao();
+    void handleCadastrarItem();
 }

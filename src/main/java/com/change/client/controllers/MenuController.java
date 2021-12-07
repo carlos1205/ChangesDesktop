@@ -31,6 +31,11 @@ public class MenuController implements IMenuHandle{
         stageFactory.changeScene(EnumScenes.EXCLUIR_USER);
     }
 
+    @Override
+    public void handleCadastrarItem() {
+        stageFactory.changeScene(EnumScenes.CADASTRAR_SP);
+    }
+
     public void setStageFactory(StageFactory stage){
         stageFactory = stage;
     }

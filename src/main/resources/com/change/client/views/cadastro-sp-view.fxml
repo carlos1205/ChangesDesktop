@@ -3,9 +3,13 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
@@ -15,7 +19,28 @@
 
 <VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.change.client.controllers.CadastroSPController">
     <children>
-        <fx:include source="menu.fxml" />
+        <MenuBar VBox.vgrow="NEVER">
+            <menus>
+                <Menu mnemonicParsing="false" onAction="#handleGoHome" text="Paginas">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Home" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Perfil">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#handleGoEdit" text="Editar" />
+                    </items>
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#handleDelecao" text="Excluir" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Produto/Serviços">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#handleCadastrarItem" text="Cadastrar" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
         <GridPane prefHeight="403.0" prefWidth="604.0">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -42,15 +67,16 @@
                 </Text>
 
                 <TextField fx:id="title" prefHeight="24.0" prefWidth="200.0" promptText="Titulo" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                <ComboBox fx:id="category" prefWidth="150.0" promptText="Categoria" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
-                <TextArea fx:id="description" prefHeight="200.0" prefWidth="200.0" promptText="Descrição" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="2" />
                 <TextField fx:id="value" promptText="Valor" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2" GridPane.valignment="TOP" />
-                <RadioButton fx:id="service" mnemonicParsing="false" text="Serviço" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                <RadioButton fx:id="product" mnemonicParsing="false" text="Produto" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.valignment="BOTTOM" />
+                <ComboBox fx:id="category" prefWidth="150.0" promptText="Categoria" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
+                <RadioButton fx:id="service" mnemonicParsing="false" text="Serviço" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                <toggleGroup>
+                    <ToggleGroup fx:id="flag_sp" />
+                </toggleGroup></RadioButton>
+                <RadioButton fx:id="product" mnemonicParsing="false" text="Produto" toggleGroup="$flag_sp" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.valignment="BOTTOM" />
                 <ComboBox fx:id="type" prefWidth="150.0" promptText="Tipo" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-
+                <TextArea fx:id="description" prefHeight="200.0" prefWidth="200.0" promptText="Descrição" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="2" />
                 <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleCadastrar" prefHeight="24.0" prefWidth="165.0" text="CADASTRAR" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
-                <Hyperlink alignment="CENTER" onAction="#handleGoBack" prefHeight="22.0" prefWidth="407.0" style="-fx-underline: true;" text="Voltar" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="TOP" />
                 <Text fx:id="errors" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="456.7294921875" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="LEFT" GridPane.rowIndex="5" GridPane.valignment="BOTTOM" />
             </children>
         </GridPane>

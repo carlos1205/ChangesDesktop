@@ -58,4 +58,9 @@ public class ExcluirUserController implements IMenuHandle{
     public void handleDelecao() {
         menu.handleDelecao();
     }
+
+    @Override
+    public void handleCadastrarItem() {
+        menu.handleCadastrarItem();
+    }
 }
