@@ -2,6 +2,7 @@ package com.change.client.controllers;
 
 import com.change.Security.HashGenerator;
 import com.change.client.EnumScenes;
+import com.change.client.config.annotations.Controller;
 import com.change.client.config.annotations.Inject;
 import com.change.client.repository.user.IUserDAO;
 import com.change.client.service.StageFactory;
@@ -15,6 +16,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
+@Controller
 public class LoginController {
     @Inject
     private static IUserDAO userDao;

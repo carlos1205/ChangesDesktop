@@ -1,12 +1,14 @@
 package com.change.client.controllers;
 
 import com.change.client.EnumScenes;
+import com.change.client.config.annotations.Controller;
 import com.change.client.service.StageFactory;
 import com.change.client.service.connection.ClientConnection;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
+@Controller
 public class InitController {
     @FXML
     private TextField host;

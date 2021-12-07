@@ -35,6 +35,7 @@ public class Config {
         injects.put(IUserDAO.class, UserDAO.class);
         injects.put(StageFactory.class, StageFactory.class);
         injects.put(Storage.class, Storage.class);
+        injects.put(IMenuHandle.class, MenuController.class);
         return injects;
     }
 
@@ -47,6 +48,7 @@ public class Config {
         classes.add(EditUserController.class);
         classes.add(ExcluirUserController.class);
         classes.add(ForgetPassSendController.class);
+        classes.add(CadastroSPController.class);
         return classes;
     }
 

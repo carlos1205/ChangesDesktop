@@ -1,6 +1,7 @@
 package com.change.client.controllers;
 
 import com.change.client.EnumScenes;
+import com.change.client.config.annotations.Controller;
 import com.change.client.config.annotations.Inject;
 import com.change.client.repository.user.IUserDAO;
 import com.change.client.service.StageFactory;
@@ -10,24 +11,17 @@ import javafx.scene.text.Text;
 
 import java.util.List;
 
-public class ExcluirUserController {
+@Controller
+public class ExcluirUserController implements IMenuHandle{
     @Inject
     private static IUserDAO userDao;
     @Inject
     private static StageFactory stageFactory;
+    @Inject
+    private static IMenuHandle menu;
 
     @FXML
     private Text errors;
-
-    public void handleGoHome(ActionEvent event){
-        this.clear();
-        stageFactory.changeScene(EnumScenes.HOME);
-    }
-
-    public void handleGoEdit(ActionEvent event){
-        this.clear();
-        stageFactory.changeScene(EnumScenes.EDIT_USER);
-    }
 
     public void handleExcluir(ActionEvent event){
         if(userDao.delete()){
@@ -48,5 +42,20 @@ public class ExcluirUserController {
 
     private void clear(){
         this.errors.setText("");
+    }
+
+    @Override
+    public void handleGoHome() {
+        menu.handleGoHome();
+    }
+
+    @Override
+    public void handleGoEdit() {
+        menu.handleGoEdit();
+    }
+
+    @Override
+    public void handleDelecao() {
+        menu.handleDelecao();
     }
 }

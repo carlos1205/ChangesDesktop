@@ -47,12 +47,15 @@
     <children>
         <MenuBar VBox.vgrow="NEVER">
             <menus>
-            <Menu mnemonicParsing="false" onAction="#handleGoHome" text="Paginas">
-              <items>
-                <MenuItem mnemonicParsing="false" text="Home" />
-              </items>
-            </Menu>
+                <Menu mnemonicParsing="false" onAction="#handleGoHome" text="Paginas">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Home" />
+                    </items>
+                </Menu>
                 <Menu mnemonicParsing="false" text="Perfil">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#handleGoEdit" text="Editar" />
+                    </items>
                     <items>
                         <MenuItem mnemonicParsing="false" onAction="#handleDelecao" text="Excluir" />
                     </items>

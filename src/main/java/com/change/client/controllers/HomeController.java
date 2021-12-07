@@ -1,6 +1,7 @@
 package com.change.client.controllers;
 
 import com.change.client.EnumScenes;
+import com.change.client.config.annotations.Controller;
 import com.change.client.config.annotations.Inject;
 import com.change.client.repository.user.IUserDAO;
 import com.change.client.service.StageFactory;
@@ -10,29 +11,25 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
-public class HomeController {
+@Controller
+public class HomeController implements IMenuHandle{
     @Inject
     private static IUserDAO userDao;
     @Inject
     private static StageFactory stageFactory;
+    @Inject
+    private static IMenuHandle menu;
 
     @FXML
     private Label welcome;
-
     @FXML
     private Label user;
+
+
 
     public void handleLogout(ActionEvent event) {
         userDao.logout();
         stageFactory.changeScene(EnumScenes.LOGIN);
-    }
-
-    public void handleEdicao(ActionEvent event) {
-        stageFactory.changeScene(EnumScenes.EDIT_USER);
-    }
-
-    public void handleDelecao(ActionEvent event) {
-        stageFactory.changeScene(EnumScenes.EXCLUIR_USER);
     }
 
     @FXML
@@ -48,5 +45,20 @@ public class HomeController {
 
     public static void setStageFactory(StageFactory stageFactory) {
         HomeController.stageFactory = stageFactory;
+    }
+
+    @Override
+    public void handleGoHome() {
+        menu.handleGoHome();
+    }
+
+    @Override
+    public void handleGoEdit() {
+        menu.handleGoEdit();
+    }
+
+    @Override
+    public void handleDelecao() {
+        menu.handleDelecao();
     }
 }

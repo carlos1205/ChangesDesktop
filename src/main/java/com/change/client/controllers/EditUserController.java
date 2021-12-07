@@ -2,6 +2,7 @@ package com.change.client.controllers;
 
 import com.change.Security.HashGenerator;
 import com.change.client.EnumScenes;
+import com.change.client.config.annotations.Controller;
 import com.change.client.config.annotations.Inject;
 import com.change.client.repository.user.IUserDAO;
 import com.change.client.service.StageFactory;
@@ -17,11 +18,14 @@ import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
-public class EditUserController {
+@Controller
+public class EditUserController implements IMenuHandle{
     @Inject
     private static IUserDAO userDao;
     @Inject
     private static StageFactory stageFactory;
+    @Inject
+    private static IMenuHandle menu;
 
     @FXML
     private TextField name;
@@ -80,5 +84,20 @@ public class EditUserController {
     private void clear(){
         this.password.setText("");
         this.errors.setText("");
+    }
+
+    @Override
+    public void handleGoHome() {
+        menu.handleGoHome();
+    }
+
+    @Override
+    public void handleGoEdit() {
+        menu.handleGoEdit();
+    }
+
+    @Override
+    public void handleDelecao() {
+        menu.handleDelecao();
     }
 }

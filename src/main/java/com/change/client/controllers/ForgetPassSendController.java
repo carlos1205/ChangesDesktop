@@ -1,6 +1,7 @@
 package com.change.client.controllers;
 
 import com.change.client.EnumScenes;
+import com.change.client.config.annotations.Controller;
 import com.change.client.config.annotations.Inject;
 import com.change.client.repository.user.IUserDAO;
 import com.change.client.service.StageFactory;
@@ -11,6 +12,7 @@ import javafx.scene.text.Text;
 
 import java.util.List;
 
+@Controller
 public class ForgetPassSendController {
     @Inject
     private static IUserDAO userDao;
