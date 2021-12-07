@@ -9,7 +9,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class UserDAO implements IUserDAO{
     private static UserDAO instance;
     private final List<String> errors;

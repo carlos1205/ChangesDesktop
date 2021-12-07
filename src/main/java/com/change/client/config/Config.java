@@ -2,6 +2,8 @@ package com.change.client.config;
 
 import com.change.client.config.annotations.Inject;
 import com.change.client.controllers.*;
+import com.change.client.repository.item.IItemDAO;
+import com.change.client.repository.item.ItemDAO;
 import com.change.client.repository.user.IUserDAO;
 import com.change.client.repository.user.UserDAO;
 import com.change.client.service.StageFactory;
@@ -36,6 +38,7 @@ public class Config {
         injects.put(StageFactory.class, StageFactory.class);
         injects.put(Storage.class, Storage.class);
         injects.put(IMenuHandle.class, MenuController.class);
+        injects.put(IItemDAO.class, ItemDAO.class);
         return injects;
     }
 
