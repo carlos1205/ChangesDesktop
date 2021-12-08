@@ -24,6 +24,7 @@ public class MenuController implements IMenuHandle{
     }
 
     public void handleGoEdit(){
+        stageFactory.destroy(EnumScenes.EDIT_USER);
         stageFactory.changeScene(EnumScenes.EDIT_USER);
     }
 
@@ -33,7 +34,14 @@ public class MenuController implements IMenuHandle{
 
     @Override
     public void handleCadastrarItem() {
+        stageFactory.destroy(EnumScenes.CADASTRAR_SP);
         stageFactory.changeScene(EnumScenes.CADASTRAR_SP);
+    }
+
+    @Override
+    public void handleListagem() {
+        stageFactory.destroy(EnumScenes.LISTAGEM);
+        stageFactory.changeScene(EnumScenes.LISTAGEM);
     }
 
     public void setStageFactory(StageFactory stage){

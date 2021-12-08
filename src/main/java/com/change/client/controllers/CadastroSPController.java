@@ -180,4 +180,9 @@ public class CadastroSPController implements IMenuHandle{
     public void handleCadastrarItem() {
         menu.handleCadastrarItem();
     }
+
+    @Override
+    public void handleListagem() {
+        menu.handleListagem();
+    }
 }

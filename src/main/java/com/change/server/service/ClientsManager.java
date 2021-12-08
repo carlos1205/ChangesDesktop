@@ -1,6 +1,7 @@
 package com.change.server.service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ClientsManager {
@@ -29,5 +30,9 @@ public class ClientsManager {
 
     public String getId(String ip){
         return clients.get(ip);
+    }
+
+    public List<String> getActives(){
+        return clients.values().stream().toList();
     }
 }

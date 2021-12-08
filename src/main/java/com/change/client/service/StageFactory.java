@@ -41,8 +41,8 @@ public class StageFactory {
         scenes.remove(EnumScenes.EDIT_USER);
     }
 
-    public void load(EnumScenes scene){
-        buildScene(scene);
+    public void destroy(EnumScenes scene){
+        scenes.remove(scene);
     }
 
     private Scene getScene(EnumScenes scene){

@@ -92,8 +92,6 @@ public class CadastroSP extends IOperation{
             messages.add("Item já cadastrado.");
             client.send(makeResponse(true, messages));
         }
-
-        client.close();
     }
 
     private boolean IsValid(Item item) {

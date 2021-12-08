@@ -1,47 +1,27 @@
 package com.change.client.controllers;
 
-import com.change.client.EnumScenes;
 import com.change.client.config.annotations.Controller;
 import com.change.client.config.annotations.Inject;
-import com.change.client.repository.user.IUserDAO;
+import com.change.client.repository.item.IItemDAO;
 import com.change.client.service.StageFactory;
-import javafx.event.ActionEvent;
+import com.change.model.Item;
 import javafx.fxml.FXML;
-import javafx.scene.text.Text;
 
 import java.util.List;
 
 @Controller
-public class ExcluirUserController implements IMenuHandle{
-    @Inject
-    private static IUserDAO userDao;
+public class ListagemController implements IMenuHandle{
     @Inject
     private static StageFactory stageFactory;
     @Inject
     private static IMenuHandle menu;
+    @Inject
+    private static IItemDAO<Item> itemDao;
 
     @FXML
-    private Text errors;
-
-    public void handleExcluir(ActionEvent event){
-        if(userDao.delete()){
-            this.clear();
-            stageFactory.changeScene(EnumScenes.LOGIN);
-        } else{
-            setErrors(userDao.getErrors());
-        }
-    }
-
-    private void setErrors(List<String> errors){
-        String errs = errors.stream()
-                .map(error -> error + "\n")
-                .reduce("", String::concat);
-
-        this.errors.setText(errs);
-    }
-
-    private void clear(){
-        this.errors.setText("");
+    public void initialize(){
+        List<Item> itens = itemDao.getAll();
+        System.out.println(itens);
     }
 
     @Override

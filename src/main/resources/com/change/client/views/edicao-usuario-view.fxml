@@ -62,7 +62,10 @@
                 </Menu>
                 <Menu mnemonicParsing="false" text="Produto/Serviços">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Cadastrar" onAction="#handleCadastrarItem"/>
+                        <MenuItem mnemonicParsing="false" onAction="#handleCadastrarItem" text="Cadastrar" />
+                    </items>
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Encontrar" onAction="#handleListagem" />
                     </items>
                 </Menu>
             </menus>

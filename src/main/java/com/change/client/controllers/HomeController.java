@@ -25,8 +25,6 @@ public class HomeController implements IMenuHandle{
     @FXML
     private Label user;
 
-
-
     public void handleLogout(ActionEvent event) {
         userDao.logout();
         stageFactory.changeScene(EnumScenes.LOGIN);
@@ -65,5 +63,10 @@ public class HomeController implements IMenuHandle{
     @Override
     public void handleCadastrarItem() {
         menu.handleCadastrarItem();
+    }
+
+    @Override
+    public void handleListagem() {
+        menu.handleListagem();
     }
 }

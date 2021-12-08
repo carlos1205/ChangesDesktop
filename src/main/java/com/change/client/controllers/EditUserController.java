@@ -105,4 +105,9 @@ public class EditUserController implements IMenuHandle{
     public void handleCadastrarItem() {
         menu.handleCadastrarItem();
     }
+
+    @Override
+    public void handleListagem() {
+        menu.handleListagem();
+    }
 }

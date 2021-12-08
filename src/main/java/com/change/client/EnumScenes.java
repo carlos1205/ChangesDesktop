@@ -8,7 +8,8 @@ public enum EnumScenes {
     EXCLUIR_USER("delete-user-view.fxml"),
     FORGET_PASS_SEND("forget-pass-send-view.fxml"),
     INIT_CLIENT("info-end-view.fxml"),
-    CADASTRAR_SP("cadastro-sp-view.fxml");
+    CADASTRAR_SP("cadastro-sp-view.fxml"),
+    LISTAGEM("listagem-view.fxml");
 
     private final String fileName;
 

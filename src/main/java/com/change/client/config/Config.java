@@ -52,6 +52,7 @@ public class Config {
         classes.add(ExcluirUserController.class);
         classes.add(ForgetPassSendController.class);
         classes.add(CadastroSPController.class);
+        classes.add(ListagemController.class);
         return classes;
     }
 

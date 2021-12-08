@@ -25,6 +25,7 @@ public class OperationsFactory {
         op = new Delecao(op);
         op = new RecuperarSenha(op);
         op = new CadastroSP(op);
+        op = new ListagemSP(op);
         return op;
     }
 

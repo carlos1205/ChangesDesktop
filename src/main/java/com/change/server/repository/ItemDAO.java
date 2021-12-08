@@ -6,6 +6,7 @@ import com.change.model.Item;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class ItemDAO {
     private static ItemDAO instance;
@@ -37,8 +38,8 @@ public class ItemDAO {
         return true;
     }
 
-    public List<Item> getAll(){
-        return null;
+    public List<Item> getAll() {
+        return itens.stream().filter(item -> item.getStatus() == EnumStatus.ABERTO).collect(Collectors.toList());
     }
 
     public boolean delete(String code){
@@ -50,4 +51,6 @@ public class ItemDAO {
     public Item get(String code){
         return itens.stream().filter(item -> item.getCode().equals(code)).findFirst().orElse(null);
     }
+
+
 }
