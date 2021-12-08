@@ -80,9 +80,12 @@ public class MyItensController implements IMenuHandle{
     }
 
     public void handleExcluir(){
-        System.out.println("Excluir");
-        System.out.println(tableView.getSelectionModel().getSelectedItem().getCode());
-        System.out.println(tableView.getSelectionModel().getSelectedItem().getTitle());
+        Item itemExcluir = itens.stream().filter(item -> item.getCode().equals(tableView.getSelectionModel().getSelectedItem().getCode()))
+                .findFirst().orElse(null);
+
+        Storage.getInstance().setItem(itemExcluir);
+        StageFactory.getInstance().destroy(EnumScenes.EXCLUIR_ITEM);
+        StageFactory.getInstance().changeScene(EnumScenes.EXCLUIR_ITEM);
     }
 
     public void handleClick(){

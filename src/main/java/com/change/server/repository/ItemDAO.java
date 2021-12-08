@@ -42,8 +42,7 @@ public class ItemDAO {
         return itens.stream().filter(item -> item.getStatus() == EnumStatus.ABERTO).collect(Collectors.toList());
     }
 
-    public boolean delete(String code){
-        Item old = get(code);
+    public boolean delete(Item old){
         itens.remove(old);
         return true;
     }
@@ -51,6 +50,4 @@ public class ItemDAO {
     public Item get(String code){
         return itens.stream().filter(item -> item.getCode().equals(code)).findFirst().orElse(null);
     }
-
-
 }

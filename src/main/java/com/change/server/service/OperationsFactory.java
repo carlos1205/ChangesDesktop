@@ -27,6 +27,7 @@ public class OperationsFactory {
         op = new CadastroSP(op);
         op = new ListagemSP(op);
         op = new EditarSP(op);
+        op = new DeleteSP(op);
         return op;
     }
 

@@ -5,6 +5,7 @@ import com.change.operations.EnumOperations;
 import com.change.server.ClientConnection;
 import com.change.server.repository.ItemDAO;
 import com.change.server.repository.UserDAO;
+import com.change.server.service.ClientsManager;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -81,6 +82,12 @@ public class EditarSP extends IOperation{
 
 
     public void make(Item item, ClientConnection client, List<String> messages) throws IOException {
+        if(!ClientsManager.getInstance().getId(client.getIP()).equals(item.getOwner().getId())){
+            messages.add("Operação Não permitida");
+            client.send(makeResponse(true, messages));
+            return;
+        }
+
         if(!IsValid(item)){
             messages.add("Nenhum campo pode ser vazio");
             client.send(makeResponse(true, messages));

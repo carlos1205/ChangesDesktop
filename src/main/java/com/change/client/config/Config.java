@@ -55,6 +55,7 @@ public class Config {
         classes.add(ListagemController.class);
         classes.add(MyItensController.class);
         classes.add(EditItemController.class);
+        classes.add(ExcluirItemController.class);
         return classes;
     }
 

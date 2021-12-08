@@ -133,7 +133,6 @@ public class ItemDAO implements IItemDAO<Item>{
     public boolean update(Item item) {
         ClientConnection connection = ClientConnection.getInstance();
         JSONObject response = connection.send(parseFullItemToJson(item, EnumOperations.EDICAO_ITEM.getNumber()));
-        this.message.clear();
         response.getJSONArray("mensagem").forEach(obj -> this.message.add(obj.toString()));
         return !(response.getBoolean("erro"));
     }
@@ -156,13 +155,22 @@ public class ItemDAO implements IItemDAO<Item>{
 
     @Override
     public boolean delete(String id) {
-        return false;
+        message.clear();
+        ClientConnection connection = ClientConnection.getInstance();
+        JSONObject response = connection.send(new JSONObject()
+                .put("operacao", EnumOperations.DELETAR_ITEM.getNumber())
+                .put("data", new JSONObject().put("produto_servico_id", id))
+                .toString());
+        response.getJSONArray("mensagem").toList().forEach(message -> this.message.add(message.toString()));
+        if(response.getBoolean("erro"))
+            return false;
+        return true;
     }
 
     @Override
     public List<String> getMessage() {
-        List<String> message = new ArrayList<>(this.message);
-        this.message.clear();
-        return message;
+        List<String> msg = new ArrayList<>(message);
+        message.clear();
+        return msg;
     }
 }
