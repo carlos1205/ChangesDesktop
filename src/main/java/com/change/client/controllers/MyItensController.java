@@ -146,6 +146,7 @@ public class MyItensController implements IMenuHandle{
         viewAdapter.setFinaly(item.getVdt().getName());
         viewAdapter.setDescription(item.getDescription());
         viewAdapter.setStatus(item.getStatus().getName());
+        viewAdapter.setOwner(item.getOwner());
         return viewAdapter;
     }
 }

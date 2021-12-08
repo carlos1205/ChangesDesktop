@@ -1,6 +1,8 @@
 package com.change.client.service.adapters;
 
 
+import com.change.model.User;
+
 import java.util.Objects;
 
 public class ItemViewAdapter {
@@ -12,6 +14,7 @@ public class ItemViewAdapter {
     private String finaly;
     private String description;
     private String status;
+    private User owner;
 
     public String getTitle() {
         return title;
@@ -75,6 +78,14 @@ public class ItemViewAdapter {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
     }
 
     @Override

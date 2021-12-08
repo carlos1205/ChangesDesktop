@@ -4,9 +4,11 @@ import com.change.client.config.annotations.Controller;
 import com.change.client.config.annotations.Inject;
 import com.change.client.repository.item.IItemDAO;
 import com.change.client.service.StageFactory;
+import com.change.client.service.Storage;
 import com.change.client.service.adapters.ItemViewAdapter;
 import com.change.model.Item;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -25,9 +27,13 @@ public class ListagemController implements IMenuHandle{
 
     @FXML
     private TableView<ItemViewAdapter> tableView;
+    @FXML
+    private Button conversar;
 
     @FXML
     public void initialize(){
+        setButtons(false);
+
         TableColumn<ItemViewAdapter, String> title = new TableColumn<>("Titulo");
         tableView.getColumns().add(title);
         title.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -55,6 +61,18 @@ public class ListagemController implements IMenuHandle{
 
         List<Item> itens = itemDao.getAll();
         tableView.getItems().setAll(converter(itens));
+    }
+
+    public void handleClick(){
+        ItemViewAdapter selected = tableView.getSelectionModel().getSelectedItem();
+        boolean buttonShow = false;
+        buttonShow = selected != null;
+        buttonShow = buttonShow && !selected.getOwner().equals(Storage.getInstance().getUser());
+        setButtons(buttonShow);
+    }
+
+    private void setButtons(boolean active){
+        conversar.setMouseTransparent(!active);
     }
 
     @Override
@@ -105,6 +123,7 @@ public class ListagemController implements IMenuHandle{
         viewAdapter.setCategory(item.getCategory().getName());
         viewAdapter.setFinaly(item.getVdt().getName());
         viewAdapter.setDescription(item.getDescription());
+        viewAdapter.setOwner(item.getOwner());
         return viewAdapter;
     }
 }

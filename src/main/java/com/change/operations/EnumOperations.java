@@ -10,7 +10,10 @@ public enum EnumOperations {
     CADASTRO_ITEM(6),
     LISTAGEM(9),
     EDICAO_ITEM(11),
-    DELETAR_ITEM(12);
+    DELETAR_ITEM(12),
+    CHAT(14),
+    CHAT_CLOSE(15),
+    CHAT_BROADCAST(18);
 
     private final int number;
     EnumOperations(int number){
