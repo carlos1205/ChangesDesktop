@@ -26,6 +26,7 @@ public class OperationsFactory {
         op = new RecuperarSenha(op);
         op = new CadastroSP(op);
         op = new ListagemSP(op);
+        op = new EditarSP(op);
         return op;
     }
 

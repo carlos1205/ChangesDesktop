@@ -1,12 +1,14 @@
 package com.change.client.controllers;
 
-import com.change.client.config.annotations.Controller;
+import com.change.client.EnumScenes;
 import com.change.client.config.annotations.Inject;
 import com.change.client.repository.item.IItemDAO;
 import com.change.client.service.StageFactory;
+import com.change.client.service.Storage;
 import com.change.client.service.adapters.ItemViewAdapter;
 import com.change.model.Item;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -14,8 +16,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-@Controller
-public class ListagemController implements IMenuHandle{
+public class MyItensController implements IMenuHandle{
     @Inject
     private static StageFactory stageFactory;
     @Inject
@@ -25,9 +26,17 @@ public class ListagemController implements IMenuHandle{
 
     @FXML
     private TableView<ItemViewAdapter> tableView;
+    @FXML
+    private Button editar;
+    @FXML
+    private Button excluir;
+
+    private List<Item> itens;
 
     @FXML
     public void initialize(){
+        setButtons(false);
+
         TableColumn<ItemViewAdapter, String> title = new TableColumn<>("Titulo");
         tableView.getColumns().add(title);
         title.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -53,8 +62,36 @@ public class ListagemController implements IMenuHandle{
         tableView.getColumns().add(description);
         description.setCellValueFactory(new PropertyValueFactory<>("description"));
 
-        List<Item> itens = itemDao.getAll();
+        TableColumn<ItemViewAdapter, String> status = new TableColumn<>("Status");
+        tableView.getColumns().add(status);
+        status.setCellValueFactory(new PropertyValueFactory<>("status"));
+
+        itens = itemDao.getOwner();
         tableView.getItems().setAll(converter(itens));
+    }
+
+    public void handleEditar(){
+        Item itemEditar = itens.stream().filter(item -> item.getCode().equals(tableView.getSelectionModel().getSelectedItem().getCode()))
+                        .findFirst().orElse(null);
+
+        Storage.getInstance().setItem(itemEditar);
+        StageFactory.getInstance().destroy(EnumScenes.EDIT_ITEM);
+        StageFactory.getInstance().changeScene(EnumScenes.EDIT_ITEM);
+    }
+
+    public void handleExcluir(){
+        System.out.println("Excluir");
+        System.out.println(tableView.getSelectionModel().getSelectedItem().getCode());
+        System.out.println(tableView.getSelectionModel().getSelectedItem().getTitle());
+    }
+
+    public void handleClick(){
+        setButtons(tableView.getSelectionModel().getSelectedItem() != null);
+    }
+
+    private void setButtons(boolean active){
+        editar.setMouseTransparent(!active);
+        excluir.setMouseTransparent(!active);
     }
 
     @Override
@@ -105,6 +142,7 @@ public class ListagemController implements IMenuHandle{
         viewAdapter.setCategory(item.getCategory().getName());
         viewAdapter.setFinaly(item.getVdt().getName());
         viewAdapter.setDescription(item.getDescription());
+        viewAdapter.setStatus(item.getStatus().getName());
         return viewAdapter;
     }
 }

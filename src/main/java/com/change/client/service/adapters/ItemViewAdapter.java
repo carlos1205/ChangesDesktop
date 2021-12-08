@@ -11,6 +11,7 @@ public class ItemViewAdapter {
     private String category;
     private String finaly;
     private String description;
+    private String status;
 
     public String getTitle() {
         return title;
@@ -58,6 +59,14 @@ public class ItemViewAdapter {
 
     public String getDescription() {
         return description;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public void setDescription(String description) {

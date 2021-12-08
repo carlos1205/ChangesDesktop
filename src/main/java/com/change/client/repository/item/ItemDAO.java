@@ -1,5 +1,6 @@
 package com.change.client.repository.item;
 
+import com.change.client.service.Storage;
 import com.change.client.service.connection.ClientConnection;
 import com.change.model.*;
 import com.change.operations.EnumOperations;
@@ -8,6 +9,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ItemDAO implements IItemDAO<Item>{
     private static ItemDAO instance;
@@ -28,7 +30,7 @@ public class ItemDAO implements IItemDAO<Item>{
     public String insert(Item item) {
         ClientConnection connection = ClientConnection.getInstance();
         JSONObject response = connection.send(parseItemToJson(item, EnumOperations.CADASTRO_ITEM.getNumber()));
-        return extractResponse(response) ? response.getJSONObject("data").getString("produto_servico_id"): null;
+        return extractResponse(response) ? response.getJSONObject("data").getString("produto_servico_id") : null;
     }
 
     private boolean extractResponse(JSONObject response) {
@@ -60,6 +62,13 @@ public class ItemDAO implements IItemDAO<Item>{
             return null;
 
         return extractAll(response);
+    }
+
+    @Override
+    public List<Item> getOwner() {
+        return getAll().stream()
+                .filter(item -> item.getOwner().getId().equals(Storage.getInstance().getUser().getId()))
+                .collect(Collectors.toList());
     }
 
     private List<Item> extractAll(JSONObject response) {
@@ -122,8 +131,28 @@ public class ItemDAO implements IItemDAO<Item>{
 
     @Override
     public boolean update(Item item) {
-        return false;
+        ClientConnection connection = ClientConnection.getInstance();
+        JSONObject response = connection.send(parseFullItemToJson(item, EnumOperations.EDICAO_ITEM.getNumber()));
+        this.message.clear();
+        response.getJSONArray("mensagem").forEach(obj -> this.message.add(obj.toString()));
+        return !(response.getBoolean("erro"));
     }
+
+    private String parseFullItemToJson(Item item, int op) {
+        return new JSONObject()
+                .put("operacao", op)
+                .put("data", new JSONObject()
+                        .put("produto_servico_id", item.getCode())
+                        .put("usuario_id", item.getOwner().getId())
+                        .put("categoria", item.getCategory().getName())
+                        .put("flag_sp", String.valueOf(item.getSp().getValue()))
+                        .put("descricao", item.getDescription())
+                        .put("valor", item.getPrice() == 0 ? null : item.getPrice())
+                        .put("titulo", item.getTitle())
+                        .put("flag_vdt", String.valueOf(item.getVdt().getValue()))
+                ).toString();
+    }
+
 
     @Override
     public boolean delete(String id) {
@@ -132,6 +161,8 @@ public class ItemDAO implements IItemDAO<Item>{
 
     @Override
     public List<String> getMessage() {
-        return null;
+        List<String> message = new ArrayList<>(this.message);
+        this.message.clear();
+        return message;
     }
 }

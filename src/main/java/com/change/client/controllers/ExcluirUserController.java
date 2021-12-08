@@ -68,4 +68,9 @@ public class ExcluirUserController implements IMenuHandle{
     public void handleListagem() {
         menu.handleListagem();
     }
+
+    @Override
+    public void handleGoMyItens() {
+        menu.handleGoMyItens();
+    }
 }

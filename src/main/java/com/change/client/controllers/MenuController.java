@@ -44,6 +44,12 @@ public class MenuController implements IMenuHandle{
         stageFactory.changeScene(EnumScenes.LISTAGEM);
     }
 
+    @Override
+    public void handleGoMyItens() {
+        stageFactory.destroy(EnumScenes.MY_ITENS);
+        stageFactory.changeScene(EnumScenes.MY_ITENS);
+    }
+
     public void setStageFactory(StageFactory stage){
         stageFactory = stage;
     }

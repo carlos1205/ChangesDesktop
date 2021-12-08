@@ -1,7 +1,6 @@
 package com.change.client.controllers;
 
 import com.change.client.EnumScenes;
-import com.change.client.config.annotations.Controller;
 import com.change.client.config.annotations.Inject;
 import com.change.client.repository.item.IItemDAO;
 import com.change.client.service.StageFactory;
@@ -18,8 +17,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@Controller
-public class CadastroSPController implements IMenuHandle{
+public class EditItemController implements IMenuHandle{
     @Inject
     private static StageFactory stageFactory;
     @Inject
@@ -44,8 +42,13 @@ public class CadastroSPController implements IMenuHandle{
 
     @FXML
     private Text errors;
+    @FXML
+    private Text success;
 
     private List<String> erros;
+
+    private String code;
+    private User owner;
 
     public void initialize(){
         for(EnumCategoria categoria: EnumCategoria.values()){
@@ -56,19 +59,37 @@ public class CadastroSPController implements IMenuHandle{
             type.getItems().add(tipo.getName());
         }
 
+        Item item = Storage.getInstance().getItem();
+        Storage.getInstance().setItem(null);
+
+        title.setText(item.getTitle());
+        category.getSelectionModel().select(item.getCategory().getName());
+        description.setText(item.getDescription());
+
+        String price = String.valueOf(item.getPrice()).replace('.',',');
+        value.setText(price);
+        type.getSelectionModel().select(item.getVdt().getName());
+
+        if(item.getSp() == EnumServicoProduto.PRODUTO)
+            product.setSelected(true);
+        else
+            service.setSelected(true);
+
+        this.code = item.getCode();
+        this.owner = item.getOwner();
         erros = new ArrayList<>();
     }
 
-    public void handleCadastrar() {
+    public void handleEditar() {
         errors.setText("");
+        success.setText("");
 
         if(valida()){
             Item item = mountItem();
-            String code = itemDao.insert(item);
-            if(code != null){
-                item.setCode(code);
-                this.clear();
-                stageFactory.changeScene(EnumScenes.HOME);
+            boolean res = itemDao.update(item);
+            if(res){
+                String success = itemDao.getMessage().get(0);
+                this.setSuccess(Arrays.asList(success));
             }else{
                 String error = itemDao.getMessage().get(0);
                 this.setErrors(Arrays.asList(error));
@@ -78,17 +99,6 @@ public class CadastroSPController implements IMenuHandle{
             setErrors(Arrays.asList(error));
             erros.clear();
         }
-    }
-
-    private void clear() {
-        title.setText("");
-        category.getSelectionModel().select(null);
-        description.setText("");
-        value.setText("");
-        type.getSelectionModel().select(null);
-        service.setSelected(false);
-        product.setSelected(false);
-        errors.setText("");
     }
 
     private Item mountItem(){
@@ -121,6 +131,10 @@ public class CadastroSPController implements IMenuHandle{
             String price = value.getText().replace(',', '.');
             item.setPrice(Float.parseFloat(price));
         }
+
+        item.setCode(code);
+        item.setOwner(owner);
+        item.setStatus(EnumStatus.ABERTO);
         return item;
     }
 
@@ -151,7 +165,7 @@ public class CadastroSPController implements IMenuHandle{
     }
 
     public void setStageFactory(StageFactory stageFactory){
-        CadastroSPController.stageFactory = stageFactory;
+        EditItemController.stageFactory = stageFactory;
     }
 
     private void setErrors(List<String> errors){
@@ -160,6 +174,14 @@ public class CadastroSPController implements IMenuHandle{
                 .reduce("", String::concat);
 
         this.errors.setText(errs);
+    }
+
+    private void setSuccess(List<String> success){
+        String suc = success.stream()
+                .map(s -> s + "\n")
+                .reduce("", String::concat);
+
+        this.success.setText(suc);
     }
 
     @Override

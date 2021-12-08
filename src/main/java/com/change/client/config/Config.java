@@ -53,6 +53,8 @@ public class Config {
         classes.add(ForgetPassSendController.class);
         classes.add(CadastroSPController.class);
         classes.add(ListagemController.class);
+        classes.add(MyItensController.class);
+        classes.add(EditItemController.class);
         return classes;
     }
 
