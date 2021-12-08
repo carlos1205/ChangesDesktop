@@ -71,6 +71,10 @@ public class ListagemController implements IMenuHandle{
         setButtons(buttonShow);
     }
 
+    public void handleChat(){
+        System.out.println("Open Chat");
+    }
+
     private void setButtons(boolean active){
         conversar.setMouseTransparent(!active);
     }

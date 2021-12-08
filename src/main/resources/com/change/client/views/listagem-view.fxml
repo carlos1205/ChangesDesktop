@@ -68,7 +68,7 @@
                </font></Text>
             <TableView onMouseClicked="#handleClick" fx:id="tableView" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="7" GridPane.rowIndex="1" GridPane.rowSpan="5">
             </TableView>
-            <Button fx:id="conversar" mnemonicParsing="false" prefHeight="24.0" prefWidth="101.0" text="Conversar" GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <Button onAction="#handleChat" fx:id="conversar" mnemonicParsing="false" prefHeight="24.0" prefWidth="101.0" text="Conversar" GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
             </children>
         </GridPane>
     </children>

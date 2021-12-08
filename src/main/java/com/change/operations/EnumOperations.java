@@ -13,7 +13,12 @@ public enum EnumOperations {
     DELETAR_ITEM(12),
     CHAT(14),
     CHAT_CLOSE(15),
-    CHAT_BROADCAST(18);
+    FECHA_NEGOCIO_CLIENT(17),
+    FECHA_NEGOCIO_OUTRO_CLIENT(16),
+    CHAT_BROADCAST_CLIENT(18),
+    CHAT_BROADCAST_SERVIDOR(19),
+    CHAT_MESSAGE(3),
+    CHAT_RECEIVE_MESSAGE(4);
 
     private final int number;
     EnumOperations(int number){

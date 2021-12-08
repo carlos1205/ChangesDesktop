@@ -62,7 +62,7 @@ public class ClientConnection implements IConnection{
         instance = null;
     }
 
-    private JSONObject receive() throws IOException{
+    public JSONObject receive() throws IOException{
         String ln;
 
         BufferedReader read = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
