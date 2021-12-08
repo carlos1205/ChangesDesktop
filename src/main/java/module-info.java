@@ -7,6 +7,9 @@ module com.change.client {
     requires java.persistence;
     requires org.postgresql.jdbc;
 
+    opens com.change.client.service.adapters to javafx.base;
+    exports com.change.client.service.adapters;
+
     opens com.change.client to javafx.fxml;
     exports com.change.client;
     exports com.change.client.controllers;

@@ -3,8 +3,8 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
@@ -33,7 +33,7 @@
                         <MenuItem mnemonicParsing="false" onAction="#handleCadastrarItem" text="Cadastrar" />
                     </items>
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Encontrar" onAction="#handleListagem" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleListagem" text="Encontrar" />
                     </items>
                 </Menu>
             </menus>
@@ -58,12 +58,9 @@
             </rowConstraints>
             <children>
                 <Text fx:id="errors" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="456.7294921875" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="LEFT" GridPane.rowIndex="5" GridPane.valignment="BOTTOM" />
-            <ScrollPane prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="7" GridPane.rowIndex="1" GridPane.rowSpan="5">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
-              </content>
-            </ScrollPane>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Listagem" textAlignment="CENTER" wrappingWidth="92.6044921875" GridPane.columnIndex="3" />
+            <TableView fx:id="tableView" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="7" GridPane.rowIndex="1" GridPane.rowSpan="5">
+            </TableView>
             </children>
         </GridPane>
     </children>

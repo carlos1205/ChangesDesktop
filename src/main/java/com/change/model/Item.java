@@ -21,6 +21,7 @@ public class Item implements Serializable {
         this.category = category;
         this.sp = sp;
         this.vdt = vdt;
+        this.price = 0f;
     }
 
     public void setCode(String code){

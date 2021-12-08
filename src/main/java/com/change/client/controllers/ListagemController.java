@@ -4,9 +4,14 @@ import com.change.client.config.annotations.Controller;
 import com.change.client.config.annotations.Inject;
 import com.change.client.repository.item.IItemDAO;
 import com.change.client.service.StageFactory;
+import com.change.client.service.adapters.ItemViewAdapter;
 import com.change.model.Item;
 import javafx.fxml.FXML;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -19,9 +24,37 @@ public class ListagemController implements IMenuHandle{
     private static IItemDAO<Item> itemDao;
 
     @FXML
+    private TableView<ItemViewAdapter> tableView;
+
+    @FXML
     public void initialize(){
+        TableColumn<ItemViewAdapter, String> title = new TableColumn<>("Titulo");
+        tableView.getColumns().add(title);
+        title.setCellValueFactory(new PropertyValueFactory<>("title"));
+
+        TableColumn<ItemViewAdapter, String> preco = new TableColumn<>("Preço");
+        tableView.getColumns().add(preco);
+        preco.setCellValueFactory(new PropertyValueFactory<>("price"));
+
+        TableColumn<ItemViewAdapter, String> tipo = new TableColumn<>("Tipo");
+        tableView.getColumns().add(tipo);
+        tipo.setCellValueFactory(new PropertyValueFactory<>("type"));
+
+        TableColumn<ItemViewAdapter, String> category = new TableColumn<>("Categoria");
+        tableView.getColumns().add(category);
+        category.setCellValueFactory(new PropertyValueFactory<>("category"));
+
+        TableColumn<ItemViewAdapter, String> finalidade = new TableColumn<>("Finalidade");
+        tableView.getColumns().add(finalidade);
+        finalidade.setCellValueFactory(new PropertyValueFactory<>("finaly"));
+
+        TableColumn<ItemViewAdapter, String> description = new TableColumn<>("Descrição");
+        description.setMinWidth(200);
+        tableView.getColumns().add(description);
+        description.setCellValueFactory(new PropertyValueFactory<>("description"));
+
         List<Item> itens = itemDao.getAll();
-        System.out.println(itens);
+        tableView.getItems().setAll(converter(itens));
     }
 
     @Override
@@ -47,5 +80,26 @@ public class ListagemController implements IMenuHandle{
     @Override
     public void handleListagem() {
         menu.handleListagem();
+    }
+
+    private List<ItemViewAdapter> converter(List<Item> itens){
+        List<ItemViewAdapter> viewAdapters = new ArrayList<>();
+        itens.forEach(item -> viewAdapters.add(translate(item)));
+        return viewAdapters;
+    }
+
+    private ItemViewAdapter translate(Item item) {
+        ItemViewAdapter viewAdapter = new ItemViewAdapter();
+        viewAdapter.setCode(item.getCode());
+        viewAdapter.setTitle(item.getTitle());
+
+        String price = String.valueOf(item.getPrice()).replace('.', ',');
+        viewAdapter.setPrice(price);
+
+        viewAdapter.setType(item.getSp().getName());
+        viewAdapter.setCategory(item.getCategory().getName());
+        viewAdapter.setFinaly(item.getVdt().getName());
+        viewAdapter.setDescription(item.getDescription());
+        return viewAdapter;
     }
 }
