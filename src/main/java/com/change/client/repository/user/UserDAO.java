@@ -68,7 +68,6 @@ public class UserDAO implements IUserDAO{
     public void logout(){
         ClientConnection connection = ClientConnection.getInstance();
         JSONObject send = new JSONObject().put("operacao", EnumOperations.LOGOUT.getNumber());
-        connection.send(send.toString());
         connection.close();
     }
 

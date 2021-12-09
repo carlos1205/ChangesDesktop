@@ -21,7 +21,9 @@ public class ChatConnection extends Thread{
             try {
                 JSONObject obj = ClientConnection.getInstance().receive();
                 OperationsFactory.getInstance().getOperations().handle(obj);
-            } catch (IOException | InterruptedException e) {
+            } catch (IOException e) {
+                System.out.println("Desconhectado");
+            } catch (InterruptedException e) {
                 instance = null;
             }
         }

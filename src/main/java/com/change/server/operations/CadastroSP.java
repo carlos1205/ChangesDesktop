@@ -80,7 +80,6 @@ public class CadastroSP extends IOperation{
         if(!IsValid(item)){
             messages.add("Nenhum campo pode ser vazio");
             client.send(makeResponse(true, messages));
-            client.close();
             return;
         }
 
