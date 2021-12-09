@@ -12,7 +12,9 @@ public enum EnumScenes {
     LISTAGEM("listagem-view.fxml"),
     MY_ITENS("my-itens-view.fxml"),
     EDIT_ITEM("edicao-sp-view.fxml"),
-    EXCLUIR_ITEM("delete-sp-view.fxml");
+    EXCLUIR_ITEM("delete-sp-view.fxml"),
+    CHAT("chat-view.fxml"),
+    FECHA_CHAT("fecha-chat.fxml");
 
     private final String fileName;
 

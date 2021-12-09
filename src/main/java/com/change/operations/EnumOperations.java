@@ -12,6 +12,7 @@ public enum EnumOperations {
     EDICAO_ITEM(11),
     DELETAR_ITEM(12),
     CHAT(14),
+    CHAT_OPEN(20),
     CHAT_CLOSE(15),
     FECHA_NEGOCIO_CLIENT(17),
     FECHA_NEGOCIO_OUTRO_CLIENT(16),

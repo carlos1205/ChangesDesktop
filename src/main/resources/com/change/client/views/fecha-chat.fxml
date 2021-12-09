@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.change.client.controllers.FechaChatController">
+    <children>
+        <MenuBar VBox.vgrow="NEVER">
+            <menus>
+                <Menu mnemonicParsing="false" onAction="#handleGoHome" text="Paginas">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Home" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Perfil">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#handleGoEdit" text="Editar" />
+                    </items>
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#handleDelecao" text="Excluir" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Produto/Serviços">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#handleCadastrarItem" text="Cadastrar" />
+                    </items>
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#handleListagem" text="Encontrar" />
+                    </items>
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#handleGoMyItens" text="Meus Itens" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+        <AnchorPane fx:id="pane" maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+            <children>
+                <Text layoutX="243.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="Saindo do Chat" textAlignment="CENTER" wrappingWidth="154.7294921875">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Text>
+                <Text layoutX="117.0" layoutY="109.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Muito Obrigado por usar nosso sistema. E ai Negocio Fechado?" wrappingWidth="404.67431640625" />
+                <Button fx:id="nao" layoutX="254.0" layoutY="268.0" mnemonicParsing="false" onAction="#handleNao" prefHeight="24.0" prefWidth="130.0" style="-fx-background-color: #cb2535;" text="Nao" textAlignment="CENTER" textFill="WHITE" />
+                <Text fx:id="messages" layoutX="151.0" layoutY="304.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="335.7294921875" />
+                <Button fx:id="sim" layoutX="254.0" layoutY="224.0" mnemonicParsing="false" onAction="#handleSim" prefHeight="24.0" prefWidth="130.0" style="-fx-background-color: green;" text="Sim" textAlignment="CENTER" textFill="WHITE" />
+            </children>
+        </AnchorPane>
+    </children>
+</VBox>

@@ -1,7 +1,10 @@
 package com.change.client.controllers;
 
+import com.change.client.EnumScenes;
 import com.change.client.config.annotations.Controller;
 import com.change.client.config.annotations.Inject;
+import com.change.client.repository.chat.ChatDAO;
+import com.change.client.repository.chat.IChatDAO;
 import com.change.client.repository.item.IItemDAO;
 import com.change.client.service.StageFactory;
 import com.change.client.service.Storage;
@@ -12,8 +15,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.text.Text;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -24,11 +29,17 @@ public class ListagemController implements IMenuHandle{
     private static IMenuHandle menu;
     @Inject
     private static IItemDAO<Item> itemDao;
+    @Inject
+    private static IChatDAO chatDao;
 
     @FXML
     private TableView<ItemViewAdapter> tableView;
     @FXML
     private Button conversar;
+    @FXML
+    private Text errors;
+
+    private List<Item> itens;
 
     @FXML
     public void initialize(){
@@ -59,7 +70,7 @@ public class ListagemController implements IMenuHandle{
         tableView.getColumns().add(description);
         description.setCellValueFactory(new PropertyValueFactory<>("description"));
 
-        List<Item> itens = itemDao.getAll();
+        itens = itemDao.getAll();
         tableView.getItems().setAll(converter(itens));
     }
 
@@ -72,7 +83,17 @@ public class ListagemController implements IMenuHandle{
     }
 
     public void handleChat(){
-        System.out.println("Open Chat");
+        Item itemEditar = itens.stream().filter(item -> item.getCode().equals(tableView.getSelectionModel().getSelectedItem().getCode()))
+                .findFirst().orElse(null);
+        this.errors.setText("");
+        if(chatDao.openChat(itemEditar)){
+            Storage.getInstance().setItem(itemEditar);
+            StageFactory.getInstance().destroy(EnumScenes.CHAT);
+            StageFactory.getInstance().changeScene(EnumScenes.CHAT);
+        }else{
+            String error = chatDao.getMessage().get(0);
+            this.setErrors(Arrays.asList(error));
+        }
     }
 
     private void setButtons(boolean active){
@@ -129,5 +150,13 @@ public class ListagemController implements IMenuHandle{
         viewAdapter.setDescription(item.getDescription());
         viewAdapter.setOwner(item.getOwner());
         return viewAdapter;
+    }
+
+    private void setErrors(List<String> errors){
+        String errs = errors.stream()
+                .map(error -> error + "\n")
+                .reduce("", String::concat);
+
+        this.errors.setText(errs);
     }
 }

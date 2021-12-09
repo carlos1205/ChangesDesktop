@@ -1,11 +1,18 @@
 package com.change.client.repository.chat;
 
+import com.change.client.controllers.ChatController;
+import com.change.client.controllers.FechaChatController;
 import com.change.model.Item;
 
+import java.util.List;
+
 public interface IChatDAO {
-    String receiveMessage();
+    void receiveMessage();
     void sendMessage(String message, Item product);
     void sendBroadCastMessage(String message);
-    boolean fecharNegocio(boolean fechado, Item product);
+    void openChatReceive(Item product);
+    void fecharNegocio(boolean fechado, Item product, FechaChatController page);
     boolean openChat(Item product);
+    List<String> getMessage();
+    void setChat(ChatController chat);
 }

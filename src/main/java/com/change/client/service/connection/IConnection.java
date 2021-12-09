@@ -8,5 +8,6 @@ public interface IConnection {
     void create(String host, int port);
     JSONObject send(String message);
     void close();
-    public JSONObject receive() throws IOException;
+    void createChatClient();
+    JSONObject receive() throws IOException;
 }

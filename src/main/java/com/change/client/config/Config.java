@@ -2,6 +2,8 @@ package com.change.client.config;
 
 import com.change.client.config.annotations.Inject;
 import com.change.client.controllers.*;
+import com.change.client.repository.chat.ChatDAO;
+import com.change.client.repository.chat.IChatDAO;
 import com.change.client.repository.item.IItemDAO;
 import com.change.client.repository.item.ItemDAO;
 import com.change.client.repository.user.IUserDAO;
@@ -39,6 +41,7 @@ public class Config {
         injects.put(Storage.class, Storage.class);
         injects.put(IMenuHandle.class, MenuController.class);
         injects.put(IItemDAO.class, ItemDAO.class);
+        injects.put(IChatDAO.class, ChatDAO.class);
         return injects;
     }
 
@@ -56,6 +59,8 @@ public class Config {
         classes.add(MyItensController.class);
         classes.add(EditItemController.class);
         classes.add(ExcluirItemController.class);
+        classes.add(ChatController.class);
+        classes.add(FechaChatController.class);
         return classes;
     }
 

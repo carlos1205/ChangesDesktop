@@ -10,6 +10,7 @@ public class ChatConnection extends Thread{
         while(true){
             try {
                 JSONObject obj = ClientConnection.getInstance().receive();
+                System.out.println("Open Chat");
             } catch (IOException e) {
                 e.printStackTrace();
             }

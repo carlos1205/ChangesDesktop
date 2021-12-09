@@ -13,6 +13,7 @@ public class ClientConnection implements IConnection{
     private static int port;
 
     private Socket socket;
+    private ChatConnection threadChat;
 
     public static ClientConnection getInstance(){
         if(null == instance)
@@ -60,6 +61,11 @@ public class ClientConnection implements IConnection{
             System.out.println("IO: "+e.getMessage());
         }
         instance = null;
+    }
+
+    @Override
+    public void createChatClient() {
+        this.threadChat = new ChatConnection();
     }
 
     public JSONObject receive() throws IOException{
