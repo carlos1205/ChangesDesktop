@@ -26,7 +26,7 @@ public class ChatConnection extends Thread{
                     this.notify();
                 }
             } catch (IOException | InterruptedException e) {
-                e.printStackTrace();
+                instance = null;
             }
         }
     }

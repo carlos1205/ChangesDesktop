@@ -28,6 +28,8 @@ public class OperationsFactory {
         op = new ListagemSP(op);
         op = new EditarSP(op);
         op = new DeleteSP(op);
+        op = new OpenChat(op);
+        op = new SendMessage(op);
         return op;
     }
 

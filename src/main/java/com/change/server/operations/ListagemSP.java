@@ -93,8 +93,8 @@ public class ListagemSP extends IOperation {
     }
 
     private List<User> getUserOnline() {
-        List<String> ids = ClientsManager.getInstance().getActives();
-        return ids.stream().map(id -> UserDAO.getInstance().getUserWithId(id)).collect(Collectors.toList());
+        List<Client> clients = ClientsManager.getInstance().getActives();
+        return clients.stream().map(client -> client.getUser()).collect(Collectors.toList());
     }
 
     private String makeResponseSuccess(boolean error, List<String> messages, JSONArray data){

@@ -47,7 +47,7 @@ public class Login extends IOperation{
         User foundUser = UserDAO.getInstance().getUserWithEmail(user.getEmail());
 
         if((null != foundUser) && foundUser.getPassword().equalsIgnoreCase(user.getPassword())){
-            ClientsManager.getInstance().addClient(client.getIP(), foundUser.getId());
+            ClientsManager.getInstance().addClient(client, foundUser);
             return foundUser;
         }
         return null;
