@@ -1,6 +1,8 @@
 package com.change.server.service;
 
 import com.change.model.Chat;
+import com.change.model.EnumStatus;
+import com.change.model.Item;
 import com.change.model.User;
 
 import java.util.HashMap;
@@ -27,6 +29,9 @@ public class ChatManager {
     }
 
     public void removeChat(User user){
+        Chat chat = this.chats.get(user);
+        if(chat.isFechado())
+            chat.getProduto().setStatus(EnumStatus.FECHADO);
         this.chats.remove(user);
     }
 

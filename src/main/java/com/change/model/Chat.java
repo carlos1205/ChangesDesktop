@@ -1,5 +1,6 @@
 package com.change.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Chat {
@@ -11,6 +12,7 @@ public class Chat {
     public Chat(Item produto, User user){
         this.produto=produto;
         this.usuario=user;
+        this.fechado = new ArrayList<>();
     }
 
     public Item getProduto() {
