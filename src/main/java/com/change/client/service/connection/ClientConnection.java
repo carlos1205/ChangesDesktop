@@ -45,7 +45,9 @@ public class ClientConnection implements IConnection{
             out.println(message);
             System.out.println("Mensagem Enviada: " + message);
 
-            response = receive();
+            synchronized (this) {
+                response = receive();
+            }
         }catch (IOException | InterruptedException e){
             System.out.println("IO: "+e.getMessage());
         }

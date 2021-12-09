@@ -14,14 +14,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CloseChat extends IOperation {
-    private static final EnumOperations operations = EnumOperations.CHAT_CLOSE;
+public class CloseConfirma extends IOperation {
+    private static final EnumOperations operations = EnumOperations.FECHA_NEGOCIO_OUTRO_CLIENT;
 
-    public CloseChat(IOperation next) {
+    public CloseConfirma(IOperation next) {
         super(next);
     }
 
-    public CloseChat() {
+    public CloseConfirma() {
         super();
     }
 
@@ -43,25 +43,37 @@ public class CloseChat extends IOperation {
 
                 chat.addFechado(flag);
                 if(flag){
+                    destiny.send(makeNotification(flag, item).toString());
                     mensagem.add("Fechando negocio");
                 }else{
                     ChatManager.getInstance().removeChat(item.getOwner());
                     mensagem.add("Negocio Cancelado");
                 }
-                destiny.send(makeNotification(flag, item, mensagem).toString());
+                client.send(makeJSON(item, !flag, mensagem).toString());
+            }else{
+                mensagem.add("Negocio Cancelado");
+                client.send(makeJSON(item, true, mensagem).toString());
             }
         } else {
             super.handle(client, message);
         }
     }
 
-    private JSONObject makeNotification(boolean flag, Item prod, List<String> mensagem){
+    private JSONObject makeJSON(Item prod, boolean erro, List<String> mensagem){
         JSONObject obj = new JSONObject();
-        obj.put("operacao", EnumOperations.FECHA_NEGOCIO_CLIENT.getNumber());
-        obj.put("erro", flag);
+        obj.put("operacao", operations.getNumber());
+        obj.put("data", new JSONObject().put("produto_servico_id", prod.getCode()));
+        obj.put("erro", erro);
         obj.put("mensagem", mensagem);
+        return obj;
+    }
+
+    private JSONObject makeNotification(boolean flag, Item prod){
+        JSONObject obj = new JSONObject();
+        obj.put("operacao", EnumOperations.FECHA_NEGOCIO_OUTRO_CLIENT.getNumber());
         obj.put("data", new JSONObject()
                 .put("produto_servico_id", prod.getCode())
+                .put("flag_confirma", flag)
         );
         return obj;
     }
