@@ -42,7 +42,7 @@ public class ChatDAO implements IChatDAO{
                 .put("produto_servico_id", product.getCode())
                 .put("mensagem", message);
 
-        ClientConnection.getInstance().sendWithoutResponse(new JSONObject().put("operacao", EnumOperations.CHAT_MESSAGE).put("data", data).toString());
+        ClientConnection.getInstance().sendWithoutResponse(new JSONObject().put("operacao", EnumOperations.CHAT_MESSAGE.getNumber()).put("data", data).toString());
     }
 
     @Override
@@ -52,34 +52,36 @@ public class ChatDAO implements IChatDAO{
 
     @Override
     public boolean fecharNegocio(boolean fechado, Item product, FechaChatController page) {
-        if(null != page){
-            if(null != this.page){
-                this.page = page;
-                if(fechado){
-                    page.handleConfirmacao("O Acordo foi fechado", fechado);
-                }else{
-                    page.handleConfirmacao("O Acordo não foi fechado", fechado);
-                }
-                JSONObject data = new JSONObject()
-                        .put("produto_servico_id", product.getCode())
-                        .put("flag_confirma", fechado);
-
-                JSONObject response = ClientConnection.getInstance().send(new JSONObject().put("operacao", EnumOperations.FECHA_NEGOCIO_OUTRO_CLIENT).put("data", data).toString());
-                response.getJSONArray("mensagem").toList().forEach(message -> this.message.add(message.toString()));
-                return !response.getBoolean("erro");
-            }else{
-                this.page = page;
-                JSONObject data = new JSONObject()
-                        .put("produto_servico_id", product.getCode())
-                        .put("flag_confirma", fechado);
-
-                JSONObject response = ClientConnection.getInstance().send(new JSONObject().put("operacao", EnumOperations.CHAT_CLOSE).put("data", data).toString());
-                response.getJSONArray("mensagem").toList().forEach(message -> this.message.add(message.toString()));
-                return !response.getBoolean("erro");
-            }
-        }else{
+        if(null != page && null == this.page){
             page.handleConfirmacao("Negócio não fechado", false);
         }
+
+        if(null != this.page && null != page){
+            this.page = page;
+            if(fechado){
+                page.handleConfirmacao("O Acordo foi fechado", fechado);
+            }else{
+                page.handleConfirmacao("O Acordo não foi fechado", fechado);
+            }
+            JSONObject data = new JSONObject()
+                    .put("produto_servico_id", product.getCode())
+                    .put("flag_confirma", fechado);
+
+            JSONObject response = ClientConnection.getInstance().send(new JSONObject().put("operacao", EnumOperations.FECHA_NEGOCIO_OUTRO_CLIENT.getNumber()).put("data", data).toString());
+            response.getJSONArray("mensagem").toList().forEach(message -> this.message.add(message.toString()));
+            return !response.getBoolean("erro");
+        }
+
+        if(null == this.page && null != page){
+            JSONObject data = new JSONObject()
+                    .put("produto_servico_id", product.getCode())
+                    .put("flag_confirma", fechado);
+
+            JSONObject response = ClientConnection.getInstance().send(new JSONObject().put("operacao", EnumOperations.CHAT_CLOSE.getNumber()).put("data", data).toString());
+            response.getJSONArray("mensagem").toList().forEach(message -> this.message.add(message.toString()));
+            return !response.getBoolean("erro");
+        }
+
         return true;
     }
 
