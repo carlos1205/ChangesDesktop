@@ -38,6 +38,7 @@ public class OpenChat extends IOperation {
                 ChatManager.getInstance().addChat(item.getOwner(), new Chat(item, user));
                 mensagem.add("Sucesso");
                 client.send(makeJSON(item, false, mensagem).toString());
+                System.out.println(ownerConnection);
                 ownerConnection.getConnect().send(makeNotification(mensagem, item).toString());
             }else{
                 mensagem.add("Usuário indisponivel");
