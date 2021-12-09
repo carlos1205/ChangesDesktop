@@ -40,6 +40,7 @@ public class ChatController implements IMenuHandle{
         itemName.setText(item.getTitle());
 
         chatDao.setChat(this);
+        chatDao.setPage(null);
     }
 
     public void handleSair(){

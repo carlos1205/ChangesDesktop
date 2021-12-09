@@ -19,6 +19,7 @@ public class ChatDAO implements IChatDAO{
     private final List<String> message;
 
     private ChatController chat;
+    private FechaChatController page;
 
     public static ChatDAO getInstance(){
         if(null == instance)
@@ -31,15 +32,17 @@ public class ChatDAO implements IChatDAO{
     }
 
     @Override
-    public void receiveMessage() {
-        String message = "mensagem recebida";
+    public void receiveMessage(String message) {
         chat.handleReceive(message);
     }
 
     @Override
     public void sendMessage(String message, Item product) {
-        System.out.println("Mensagem Enviada");
-        this.receiveMessage();
+        JSONObject data = new JSONObject()
+                .put("produto_servico_id", product.getCode())
+                .put("mensagem", message);
+
+        ClientConnection.getInstance().sendWithoutResponse(new JSONObject().put("operacao", EnumOperations.CHAT_MESSAGE).put("data", data).toString());
     }
 
     @Override
@@ -48,9 +51,51 @@ public class ChatDAO implements IChatDAO{
     }
 
     @Override
-    public void fecharNegocio(boolean fechado, Item product, FechaChatController page) {
-        if(null != page)
+    public boolean fecharNegocio(boolean fechado, Item product, FechaChatController page) {
+        if(null != page){
+            if(null != this.page){
+                this.page = page;
+                if(fechado){
+                    page.handleConfirmacao("O Acordo foi fechado", fechado);
+                }else{
+                    page.handleConfirmacao("O Acordo não foi fechado", fechado);
+                }
+                JSONObject data = new JSONObject()
+                        .put("produto_servico_id", product.getCode())
+                        .put("flag_confirma", fechado);
+
+                JSONObject response = ClientConnection.getInstance().send(new JSONObject().put("operacao", EnumOperations.FECHA_NEGOCIO_OUTRO_CLIENT).put("data", data).toString());
+                response.getJSONArray("mensagem").toList().forEach(message -> this.message.add(message.toString()));
+                return !response.getBoolean("erro");
+            }else{
+                this.page = page;
+                JSONObject data = new JSONObject()
+                        .put("produto_servico_id", product.getCode())
+                        .put("flag_confirma", fechado);
+
+                JSONObject response = ClientConnection.getInstance().send(new JSONObject().put("operacao", EnumOperations.CHAT_CLOSE).put("data", data).toString());
+                response.getJSONArray("mensagem").toList().forEach(message -> this.message.add(message.toString()));
+                return !response.getBoolean("erro");
+            }
+        }else{
             page.handleConfirmacao("Negócio não fechado", false);
+        }
+        return true;
+    }
+
+    @Override
+    public void fecharNegocioReceive(boolean fechado, Item product, List<String> response) {
+        if(null != this.page){
+            page.handleConfirmacao(response.get(0), fechado);
+        }else{
+            Storage.getInstance().setItem(product);
+            StageFactory.getInstance().destroy(EnumScenes.FECHA_CHAT);
+            StageFactory.getInstance().changeScene(EnumScenes.FECHA_CHAT);
+
+            if(!fechado){
+                page.handleConfirmacao(response.get(0), fechado);
+            }
+        }
     }
 
     @Override
@@ -74,8 +119,7 @@ public class ChatDAO implements IChatDAO{
         );
 
         response.getJSONArray("mensagem").toList().forEach(message -> this.message.add(message.toString()));
-        //return !(response.getBoolean("erro"));
-        return true;
+        return !(response.getBoolean("erro"));
     }
 
     @Override
@@ -87,5 +131,9 @@ public class ChatDAO implements IChatDAO{
 
     public void setChat(ChatController chat){
         this.chat = chat;
+    }
+
+    public void setPage(FechaChatController page){
+        this.page = page;
     }
 }

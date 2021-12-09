@@ -38,22 +38,25 @@ public class FechaChatController implements IMenuHandle{
     }
 
     public void handleNao(){
-        pane.getChildren().remove(sim);
-        pane.getChildren().remove(nao);
+        removeButtons();
 
         messages.setText("Ok, esperamos que tenha tido uma boa experiencia.");
         chatDao.fecharNegocio(false, item, null);
     }
 
     public void handleSim(){
-        pane.getChildren().remove(sim);
-        pane.getChildren().remove(nao);
+        removeButtons();
 
         messages.setText("Muito bom, aguarde só um instante. Por Favor.\n OBS: caso saia a negociação será cancelada.");
-        chatDao.fecharNegocio(true, item, this);
+        boolean res = chatDao.fecharNegocio(true, item, this);
+        if(!res){
+            handleConfirmacao(chatDao.getMessage().get(0), false);
+        }
     }
 
     public void handleConfirmacao(String message, boolean isFechado){
+        removeButtons();
+
         if(isFechado)
             messages.setFill(Paint.valueOf("green"));
         else
@@ -61,6 +64,11 @@ public class FechaChatController implements IMenuHandle{
 
         item = null;
         messages.setText(message);
+    }
+
+    private void removeButtons(){
+        pane.getChildren().remove(sim);
+        pane.getChildren().remove(nao);
     }
 
     private void exit(){
