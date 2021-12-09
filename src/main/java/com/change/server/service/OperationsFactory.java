@@ -30,6 +30,8 @@ public class OperationsFactory {
         op = new DeleteSP(op);
         op = new OpenChat(op);
         op = new SendMessage(op);
+        op = new CloseChat(op);
+        op = new CloseConfirma(op);
         return op;
     }
 
