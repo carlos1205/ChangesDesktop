@@ -46,7 +46,6 @@ public class ClientConnection implements IConnection{
             System.out.println("Mensagem Enviada: " + message);
 
             response = receive();
-            System.out.println("Mensagem Recebida: " + response);
         }catch (IOException | InterruptedException e){
             System.out.println("IO: "+e.getMessage());
         }
@@ -69,7 +68,9 @@ public class ClientConnection implements IConnection{
         char[] cbuf = new char[2048];
         read.read(cbuf);
         ln = String.valueOf(cbuf.clone());
-        return new JSONObject(ln);
+        JSONObject obj = new JSONObject(ln);
+        System.out.println("Mensagem Recebida: " + obj.toString());
+        return obj;
     }
 
     public void sendWithoutResponse(String message){

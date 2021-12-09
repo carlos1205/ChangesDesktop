@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ClientsManager {
     private static ClientsManager instance;
@@ -62,6 +63,6 @@ public class ClientsManager {
     }
 
     public List<Client> getActives(){
-        return clients.stream().toList();
+        return clients.stream().collect(Collectors.toList());
     }
 }
