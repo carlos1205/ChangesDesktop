@@ -6,6 +6,7 @@ import com.change.client.controllers.FechaChatController;
 import com.change.client.service.StageFactory;
 import com.change.client.service.Storage;
 import com.change.client.service.connection.ClientConnection;
+import com.change.client.service.operations.WaitHandle;
 import com.change.model.Item;
 import com.change.model.User;
 import com.change.operations.EnumOperations;
@@ -67,7 +68,8 @@ public class ChatDAO implements IChatDAO{
                     .put("produto_servico_id", product.getCode())
                     .put("flag_confirma", fechado);
 
-            JSONObject response = ClientConnection.getInstance().send(new JSONObject().put("operacao", EnumOperations.FECHA_NEGOCIO_OUTRO_CLIENT.getNumber()).put("data", data).toString());
+            ClientConnection.getInstance().send(new JSONObject().put("operacao", EnumOperations.FECHA_NEGOCIO_OUTRO_CLIENT.getNumber()).put("data", data).toString());
+            JSONObject response = WaitHandle.getInstance().waitHandle(EnumOperations.FECHA_NEGOCIO_OUTRO_CLIENT);
             response.getJSONArray("mensagem").toList().forEach(message -> this.message.add(message.toString()));
             return !response.getBoolean("erro");
         }
@@ -77,7 +79,8 @@ public class ChatDAO implements IChatDAO{
                     .put("produto_servico_id", product.getCode())
                     .put("flag_confirma", fechado);
 
-            JSONObject response = ClientConnection.getInstance().send(new JSONObject().put("operacao", EnumOperations.CHAT_CLOSE.getNumber()).put("data", data).toString());
+            ClientConnection.getInstance().send(new JSONObject().put("operacao", EnumOperations.CHAT_CLOSE.getNumber()).put("data", data).toString());
+            JSONObject response = WaitHandle.getInstance().waitHandle(EnumOperations.CHAT_CLOSE);
             response.getJSONArray("mensagem").toList().forEach(message -> this.message.add(message.toString()));
             return !response.getBoolean("erro");
         }
@@ -110,13 +113,12 @@ public class ChatDAO implements IChatDAO{
     @Override
     public boolean openChat(Item product) {
         ClientConnection connection = ClientConnection.getInstance();
-
-        JSONObject response = connection.send(
+        connection.send(
                 new JSONObject().put("operacao", EnumOperations.CHAT.getNumber())
                 .put("data", new JSONObject().put("produto_servico_id", product.getCode()))
                 .toString()
         );
-
+        JSONObject response = WaitHandle.getInstance().waitHandle(EnumOperations.CHAT);
         response.getJSONArray("mensagem").toList().forEach(message -> this.message.add(message.toString()));
         return !(response.getBoolean("erro"));
     }

@@ -2,6 +2,7 @@ package com.change.client.repository.item;
 
 import com.change.client.service.Storage;
 import com.change.client.service.connection.ClientConnection;
+import com.change.client.service.operations.WaitHandle;
 import com.change.model.*;
 import com.change.operations.EnumOperations;
 import org.json.JSONArray;
@@ -29,7 +30,8 @@ public class ItemDAO implements IItemDAO<Item>{
     @Override
     public String insert(Item item) {
         ClientConnection connection = ClientConnection.getInstance();
-        JSONObject response = connection.send(parseItemToJson(item, EnumOperations.CADASTRO_ITEM.getNumber()));
+        connection.send(parseItemToJson(item, EnumOperations.CADASTRO_ITEM.getNumber()));
+        JSONObject response = WaitHandle.getInstance().waitHandle(EnumOperations.CADASTRO_ITEM);
         return extractResponse(response) ? response.getJSONObject("data").getString("produto_servico_id") : null;
     }
 
@@ -56,7 +58,8 @@ public class ItemDAO implements IItemDAO<Item>{
     @Override
     public List<Item> getAll() {
         ClientConnection connection = ClientConnection.getInstance();
-        JSONObject response = connection.send(new JSONObject().put("operacao", EnumOperations.LISTAGEM.getNumber()).toString());
+        connection.send(new JSONObject().put("operacao", EnumOperations.LISTAGEM.getNumber()).toString());
+        JSONObject response = WaitHandle.getInstance().waitHandle(EnumOperations.LISTAGEM);
         response.getJSONArray("mensagem").toList().forEach(message -> this.message.add(message.toString()));
         if(response.getBoolean("erro"))
             return null;
@@ -132,7 +135,8 @@ public class ItemDAO implements IItemDAO<Item>{
     @Override
     public boolean update(Item item) {
         ClientConnection connection = ClientConnection.getInstance();
-        JSONObject response = connection.send(parseFullItemToJson(item, EnumOperations.EDICAO_ITEM.getNumber()));
+        connection.send(parseFullItemToJson(item, EnumOperations.EDICAO_ITEM.getNumber()));
+        JSONObject response = WaitHandle.getInstance().waitHandle(EnumOperations.EDICAO_ITEM);
         response.getJSONArray("mensagem").forEach(obj -> this.message.add(obj.toString()));
         return !(response.getBoolean("erro"));
     }
@@ -157,10 +161,12 @@ public class ItemDAO implements IItemDAO<Item>{
     public boolean delete(String id) {
         message.clear();
         ClientConnection connection = ClientConnection.getInstance();
-        JSONObject response = connection.send(new JSONObject()
+        connection.send(new JSONObject()
                 .put("operacao", EnumOperations.DELETAR_ITEM.getNumber())
                 .put("data", new JSONObject().put("produto_servico_id", id))
                 .toString());
+
+        JSONObject response = WaitHandle.getInstance().waitHandle(EnumOperations.DELETAR_ITEM);
         response.getJSONArray("mensagem").toList().forEach(message -> this.message.add(message.toString()));
         if(response.getBoolean("erro"))
             return false;

@@ -22,6 +22,7 @@ public class OperationsFactory {
         op = new ReceberMensagemHandle(op);
         op = new CloseHandle(op);
         op = new FecharNegocioHandle(op);
+        op = WaitHandle.getInstance(op);
         return op;
     }
 

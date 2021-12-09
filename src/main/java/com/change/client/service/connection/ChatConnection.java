@@ -19,15 +19,16 @@ public class ChatConnection extends Thread{
     public void run(){
         while(true){
             try {
-                System.out.println("Lendo");
-                synchronized (this){
-                    this.wait();
-                    JSONObject obj = ClientConnection.getInstance().receive();
-                    OperationsFactory.getInstance().getOperations().handle(obj);
-                }
+                JSONObject obj = ClientConnection.getInstance().receive();
+                OperationsFactory.getInstance().getOperations().handle(obj);
             } catch (IOException | InterruptedException e) {
                 instance = null;
             }
         }
+    }
+
+    public void close(){
+        this.interrupt();
+        instance = null;
     }
 }

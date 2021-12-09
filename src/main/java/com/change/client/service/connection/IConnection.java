@@ -6,7 +6,7 @@ import java.io.IOException;
 
 public interface IConnection {
     void create(String host, int port);
-    JSONObject send(String message);
+    void send(String message);
     void close();
     JSONObject receive() throws IOException, InterruptedException;
     void sendWithoutResponse(String message);

@@ -1,5 +1,6 @@
 package com.change.client.repository.user;
 
+import com.change.client.service.operations.WaitHandle;
 import com.change.model.User;
 import com.change.client.service.connection.ClientConnection;
 import com.change.client.service.Storage;
@@ -27,7 +28,8 @@ public class UserDAO implements IUserDAO{
 
     public boolean login(String email, String password){
         ClientConnection connection = ClientConnection.getInstance();
-        JSONObject response = connection.send(parseLoginToJson(email, password));
+        connection.send(parseLoginToJson(email, password));
+        JSONObject response = WaitHandle.getInstance().waitHandle(EnumOperations.LOGIN);
         boolean res = Boolean.parseBoolean(response.get("erro").toString());
 
         if(!res){
@@ -52,7 +54,9 @@ public class UserDAO implements IUserDAO{
     public boolean delete(){
         ClientConnection connection = ClientConnection.getInstance();
         JSONObject json = new JSONObject().put("operacao", EnumOperations.DELETAR_USUARIO.getNumber());
-        json = connection.send(json.toString());
+        connection.send(json.toString());
+        json = WaitHandle.getInstance().waitHandle(EnumOperations.DELETAR_USUARIO);
+
         boolean res = Boolean.parseBoolean(json.get("erro").toString());
         if(res)
             this.errors.add(json.getJSONArray("mensagem").getString(0));
@@ -64,14 +68,14 @@ public class UserDAO implements IUserDAO{
     public void logout(){
         ClientConnection connection = ClientConnection.getInstance();
         JSONObject send = new JSONObject().put("operacao", EnumOperations.LOGOUT.getNumber());
-
         connection.send(send.toString());
         connection.close();
     }
 
     public boolean forgetPass(String email){
         ClientConnection connection = ClientConnection.getInstance();
-        JSONObject response = connection.send(parseForgotPassToJson(email));
+        connection.send(parseForgotPassToJson(email));
+        JSONObject response = WaitHandle.getInstance().waitHandle(EnumOperations.RECUPERAR_SENHA);
         connection.close();
         return extractResponse(response);
     }
@@ -90,7 +94,8 @@ public class UserDAO implements IUserDAO{
 
     private boolean createOrUpdate(String name, String email, String password, EnumOperations operation){
         ClientConnection connection = ClientConnection.getInstance();
-        JSONObject response = connection.send(parseCompleteUserToJson(name, email, password, operation.getNumber()));
+        connection.send(parseCompleteUserToJson(name, email, password, operation.getNumber()));
+        JSONObject response =  WaitHandle.getInstance().waitHandle(operation);
         return extractResponse(response);
     }
 

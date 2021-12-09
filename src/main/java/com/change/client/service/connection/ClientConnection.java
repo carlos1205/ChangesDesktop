@@ -38,20 +38,14 @@ public class ClientConnection implements IConnection{
         }
     }
 
-    public JSONObject send(String message){
-        JSONObject response = null;
+    public void send(String message){
         try{
             PrintStream out = new PrintStream(this.socket.getOutputStream());
             out.println(message);
             System.out.println("Mensagem Enviada: " + message);
-
-            synchronized (this) {
-                response = receive();
-            }
-        }catch (IOException | InterruptedException e){
+        }catch (IOException e){
             System.out.println("IO: "+e.getMessage());
         }
-        return response;
     }
 
     public void close(){
