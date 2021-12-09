@@ -102,12 +102,10 @@ public class ChatDAO implements IChatDAO{
 
     @Override
     public void openChatReceive(Item product) {
-        User user = Storage.getInstance().getUser();
-        if(user.getId().equals(product.getOwner().getId())){
-            Storage.getInstance().setItem(product);
-            StageFactory.getInstance().destroy(EnumScenes.CHAT);
-            StageFactory.getInstance().changeScene(EnumScenes.CHAT);
-        }
+        System.out.println("Open Chat");
+        Storage.getInstance().setItem(product);
+        StageFactory.getInstance().destroy(EnumScenes.CHAT);
+        StageFactory.getInstance().changeScene(EnumScenes.CHAT);
     }
 
     @Override

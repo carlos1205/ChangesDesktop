@@ -37,11 +37,11 @@ public class OpenChat extends IOperation {
                 User user = ClientsManager.getInstance().get(client.getIP()).getUser();
                 ChatManager.getInstance().addChat(item.getOwner(), new Chat(item, user));
                 mensagem.add("Sucesso");
-                client.send(makeJSON(item, true, mensagem).toString());
+                client.send(makeJSON(item, false, mensagem).toString());
                 ownerConnection.getConnect().send(makeNotification(mensagem, item).toString());
             }else{
                 mensagem.add("Usuário indisponivel");
-                client.send(makeJSON(item, false, mensagem).toString());
+                client.send(makeJSON(item, true, mensagem).toString());
             }
         } else {
             super.handle(client, message);
