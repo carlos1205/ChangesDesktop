@@ -35,7 +35,6 @@ public class Edicao extends IOperation{
         if(!IsValid(user)){
             messages.add("Nenhum campo pode ser vazio");
             client.send(makeResponse(true, messages));
-            client.close();
             return;
         }
 

@@ -18,7 +18,6 @@ public class OperationsFactory {
 
     private IHandle make(){
         IHandle op = new OpenChatHandle();
-        op = new OpenChatHandle(op);
         op = new ReceberMensagemHandle(op);
         op = new CloseHandle(op);
         op = new FecharNegocioHandle(op);

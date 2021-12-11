@@ -75,7 +75,7 @@ public class ClientConnection implements IConnection{
             obj = new JSONObject(ln);
             System.out.println("Mensagem Recebida: " + obj.toString());
         }catch (JSONException e){
-            chat.close();
+            close();
         }
 
         return obj;
