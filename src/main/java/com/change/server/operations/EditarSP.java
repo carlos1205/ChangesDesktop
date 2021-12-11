@@ -49,7 +49,7 @@ public class EditarSP extends IOperation{
 
         item.setCode(data.getString("produto_servico_id"));
 
-        if(null != data.get("valor"))
+        if(data.has("valor"))
             item.setPrice(data.getFloat("valor"));
 
         item.setStatus(EnumStatus.ABERTO);

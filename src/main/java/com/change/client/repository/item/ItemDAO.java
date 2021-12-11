@@ -91,7 +91,7 @@ public class ItemDAO implements IItemDAO<Item>{
             );
 
             item.setCode(jsonObject.getString("produto_servico_id"));
-            if(null != jsonObject.get("valor"))
+            if(jsonObject.has("valor"))
                 item.setPrice(jsonObject.getFloat("valor"));
             item.setStatus(getFlagStatus(jsonObject.getString("flag_status").charAt(0)));
 
