@@ -46,7 +46,7 @@ public class CadastroSP extends IOperation{
                     vdt
                 );
 
-        if(null != data.get("valor"))
+        if(data.has("valor"))
             item.setPrice(data.getFloat("valor"));
 
         return item;
