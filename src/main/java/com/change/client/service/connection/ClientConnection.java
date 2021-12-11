@@ -1,5 +1,6 @@
 package com.change.client.service.connection;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.*;
@@ -13,6 +14,7 @@ public class ClientConnection implements IConnection{
     private static int port;
 
     private Socket socket;
+    private ChatConnection chat;
 
     public static ClientConnection getInstance(){
         if(null == instance)
@@ -23,7 +25,9 @@ public class ClientConnection implements IConnection{
     private ClientConnection(String host, int port){
         this.socket = null;
         create(host, port);
-        ChatConnection.getInstance().start();
+
+        chat = new ChatConnection();
+        chat.start();
     }
 
     public void create(String host, int port){
@@ -50,7 +54,7 @@ public class ClientConnection implements IConnection{
 
     public void close(){
         try{
-            ChatConnection.getInstance().close();
+            chat.close();
             if(this.socket.isConnected())
                 this.socket.close();
         }catch (IOException e){
@@ -59,14 +63,21 @@ public class ClientConnection implements IConnection{
         instance = null;
     }
 
-    public synchronized JSONObject receive() throws IOException, InterruptedException {
+    public synchronized JSONObject receive() throws IOException, InterruptedException, JSONException {
         String ln;
         BufferedReader read = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
         char[] cbuf = new char[2048];
         read.read(cbuf);
         ln = String.valueOf(cbuf.clone());
-        JSONObject obj = new JSONObject(ln);
-        System.out.println("Mensagem Recebida: " + obj.toString());
+        JSONObject obj = null;
+
+        try{
+            obj = new JSONObject(ln);
+            System.out.println("Mensagem Recebida: " + obj.toString());
+        }catch (JSONException e){
+            chat.close();
+        }
+
         return obj;
     }
 
