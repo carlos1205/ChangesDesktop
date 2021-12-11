@@ -36,6 +36,8 @@ public class WaitHandle extends IHandle{
     public void handle(JSONObject message) throws IOException {
         if(message.getInt("operacao") == wait.getNumber()){
             this.json = message;
+        }else{
+            super.handle(message);
         }
     }
 

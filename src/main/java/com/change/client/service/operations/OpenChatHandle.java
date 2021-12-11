@@ -22,6 +22,8 @@ public class OpenChatHandle extends IHandle{
         if(message.getInt("operacao") == operations.getNumber()){
             Item prod = getProduto(message.getJSONObject("data").getString("produto_servico_id"));
             ChatDAO.getInstance().openChatReceive(prod);
+        }else{
+            super.handle(message);
         }
     }
 

@@ -33,7 +33,7 @@ public class OpenChat extends IOperation {
             Item item = getProduto(message.getJSONObject("data").getString("produto_servico_id"));
             Chat chat = ChatManager.getInstance().getChat(item.getOwner());
             Client ownerConnection = ClientsManager.getInstance().get(item.getOwner());
-            if (null == chat && ownerConnection != null){//TODO: PEGAR O SOCKET DO USUARIO DONO DO PRODUTO
+            if (null == chat && ownerConnection != null){
                 User user = ClientsManager.getInstance().get(client.getIP()).getUser();
                 ChatManager.getInstance().addChat(item.getOwner(), new Chat(item, user));
                 mensagem.add("Sucesso");

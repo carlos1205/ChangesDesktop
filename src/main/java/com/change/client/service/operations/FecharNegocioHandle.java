@@ -24,6 +24,8 @@ public class FecharNegocioHandle extends IHandle{
             Item prod = getProduto(message.getJSONObject("data").getString("produto_servico_id"));
             boolean haveADeal = message.getJSONObject("data").getBoolean("flag_confirma");
             ChatDAO.getInstance().fecharNegocioReceive(haveADeal, prod, null);
+        }else{
+            super.handle(message);
         }
     }
 

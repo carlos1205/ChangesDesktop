@@ -31,6 +31,5 @@ public class ChatConnection extends Thread{
 
     public void close(){
         this.interrupt();
-        instance = null;
     }
 }

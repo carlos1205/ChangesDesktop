@@ -51,7 +51,8 @@ public class ClientConnection implements IConnection{
     public void close(){
         try{
             ChatConnection.getInstance().close();
-            this.socket.close();
+            if(this.socket.isConnected())
+                this.socket.close();
         }catch (IOException e){
             System.out.println("IO: "+e.getMessage());
         }

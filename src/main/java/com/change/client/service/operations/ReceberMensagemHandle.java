@@ -21,6 +21,8 @@ public class ReceberMensagemHandle extends IHandle{
         if(message.getInt("operacao") == operations.getNumber()){
             String received = message.getJSONObject("data").getString("mensagem");
             ChatDAO.getInstance().receiveMessage(received);
+        }else{
+            super.handle(message);
         }
     }
 }

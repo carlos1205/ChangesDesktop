@@ -28,6 +28,8 @@ public class CloseHandle extends IHandle{
             List<String> responses = new ArrayList<>();
             message.getJSONArray("mensagem").toList().forEach(msg -> responses.add(msg.toString()));
             ChatDAO.getInstance().fecharNegocioReceive(haveADeal, prod, responses);
+        }else{
+            super.handle(message);
         }
     }
 
